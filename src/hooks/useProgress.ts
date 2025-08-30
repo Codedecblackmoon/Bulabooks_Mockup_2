@@ -1,147 +1,104 @@
 import { useState, useEffect } from 'react';
-import type { ProgressState, GameKey, LevelKey, ItemProgress } from '../types';
+import { ProgressState, GameKey, LevelKey } from '../types';
 
 const STORAGE_KEY = 'bulabooks.progress';
 
-const createInitialItemProgress = (): ItemProgress => ({
-  answered: false,
-  stars: 0,
-  attempts: 0
-});
+const createInitialProgress = (): ProgressState => {
+  const gameKeys: GameKey[] = ['wordHunt', 'readAloud', 'fillBlank', 'wordBuilder'];
+  const levelKeys: LevelKey[] = [1, 2, 3];
+  
+  const progress: ProgressState = {} as ProgressState;
+  
+  gameKeys.forEach(gameKey => {
+    progress[gameKey] = {} as any;
+    levelKeys.forEach(levelKey => {
+      progress[gameKey][levelKey] = {
+        items: Array(5).fill(null).map(() => ({ answered: false, stars: 0, attempts: 0 })),
+        completed: false
+      };
+    });
+  });
+  
+  return progress;
+};
 
-const createInitialLevelProgress = () => ({
-  items: Array.from({ length: 5 }, () => createInitialItemProgress()),
-  completed: false,
-  startedAt: undefined,
-  completedAt: undefined
-});
-
-const createInitialGameProgress = () => ({
-  1: createInitialLevelProgress(),
-  2: createInitialLevelProgress(),
-  3: createInitialLevelProgress()
-});
-
-const createInitialProgressState = (): ProgressState => ({
-  wordHunt: createInitialGameProgress(),
-  readAloud: createInitialGameProgress(),
-  fillBlank: createInitialGameProgress(),
-  wordBuilder: createInitialGameProgress()
-});
-
-export const useProgress = () => {
+export function useProgress() {
   const [progress, setProgress] = useState<ProgressState>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      return saved ? JSON.parse(saved) : createInitialProgressState();
+      return saved ? JSON.parse(saved) : createInitialProgress();
     } catch {
-      return createInitialProgressState();
+      return createInitialProgress();
     }
   });
 
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    } catch (error) {
-      console.error('Failed to save progress:', error);
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   }, [progress]);
 
   const updateItemProgress = (
-    gameKey: GameKey,
-    level: LevelKey,
-    itemIndex: number,
-    stars: number,
-    attempts: number = 1
+    game: GameKey, 
+    level: LevelKey, 
+    itemIndex: number, 
+    stars: 0 | 1 | 2 | 3,
+    answered: boolean = true
   ) => {
     setProgress(prev => {
       const newProgress = { ...prev };
-      const gameProgress = { ...newProgress[gameKey] };
-      const levelProgress = { ...gameProgress[level] };
-      const items = [...levelProgress.items];
-      
-      items[itemIndex] = {
-        answered: true,
-        stars: stars as 0 | 1 | 2 | 3,
-        attempts
+      newProgress[game][level].items[itemIndex] = {
+        answered,
+        stars,
+        attempts: prev[game][level].items[itemIndex].attempts + 1
       };
       
-      levelProgress.items = items;
-      
       // Check if level is completed
-      const completedItems = items.filter(item => item.answered).length;
-      if (completedItems === 5) {
-        levelProgress.completed = true;
-        levelProgress.completedAt = Date.now();
+      const allAnswered = newProgress[game][level].items.every(item => item.answered);
+      if (allAnswered && !newProgress[game][level].completed) {
+        newProgress[game][level].completed = true;
+        newProgress[game][level].completedAt = Date.now();
       }
-      
-      if (!levelProgress.startedAt && completedItems > 0) {
-        levelProgress.startedAt = Date.now();
-      }
-      
-      gameProgress[level] = levelProgress;
-      newProgress[gameKey] = gameProgress;
       
       return newProgress;
     });
   };
 
   const resetProgress = () => {
-    const initialState = createInitialProgressState();
-    setProgress(initialState);
+    const newProgress = createInitialProgress();
+    setProgress(newProgress);
+    localStorage.removeItem(STORAGE_KEY);
   };
 
-  const getGameProgress = (gameKey: GameKey) => {
-    const gameProgress = progress[gameKey];
-    let totalCompleted = 0;
+  const getGameProgress = (game: GameKey) => {
+    const gameData = progress[game];
     let totalItems = 0;
+    let completedItems = 0;
     let totalStars = 0;
     
-    Object.values(gameProgress).forEach(levelProgress => {
-      levelProgress.items.forEach(item => {
-        totalItems++;
-        if (item.answered) {
-          totalCompleted++;
-          totalStars += item.stars;
-        }
+    Object.values(gameData).forEach(level => {
+      totalItems += level.items.length;
+      level.items.forEach(item => {
+        if (item.answered) completedItems++;
+        totalStars += item.stars;
       });
     });
     
     return {
-      completedItems: totalCompleted,
+      completedItems,
       totalItems,
+      percentage: totalItems > 0 ? (completedItems / totalItems) * 100 : 0,
       totalStars,
-      percentage: totalItems > 0 ? Math.round((totalCompleted / totalItems) * 100) : 0
+      maxStars: totalItems * 3
     };
   };
 
-  const getCurrentLevel = (gameKey: GameKey): LevelKey => {
-    const gameProgress = progress[gameKey];
-    
-    // Find the first incomplete level
-    for (let level = 1; level <= 3; level++) {
-      const levelProgress = gameProgress[level as LevelKey];
-      if (!levelProgress.completed) {
-        return level as LevelKey;
+  const getCurrentLevel = (game: GameKey): LevelKey => {
+    // Find the first uncompleted level, default to 1
+    for (let level: LevelKey = 1; level <= 3; level++) {
+      if (!progress[game][level].completed) {
+        return level;
       }
     }
-    
-    // All levels completed, return last level
-    return 3;
-  };
-
-  const getCurrentItem = (gameKey: GameKey, level: LevelKey): number => {
-    const levelProgress = progress[gameKey][level];
-    
-    // Find the first unanswered item
-    for (let i = 0; i < levelProgress.items.length; i++) {
-      if (!levelProgress.items[i].answered) {
-        return i;
-      }
-    }
-    
-    // All items answered, return last item
-    return 4;
+    return 3; // All levels completed, return last level
   };
 
   return {
@@ -149,7 +106,6 @@ export const useProgress = () => {
     updateItemProgress,
     resetProgress,
     getGameProgress,
-    getCurrentLevel,
-    getCurrentItem
+    getCurrentLevel
   };
-};
+}

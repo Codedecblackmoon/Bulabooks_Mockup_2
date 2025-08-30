@@ -1,264 +1,505 @@
-import type { Language, WordHuntItem, ReadAloudItem, FillBlankItem, WordBuilderItem } from './types';
+import { GameContent } from './types';
 
 export const uiStrings = {
   en: {
-    appTitle: 'BulaBooks',
+    appName: 'BulaBooks',
     tagline: 'Gamified reading for Grades 3–6',
-    games: {
-      wordHunt: { title: 'Word Hunt Adventure', description: 'Find words by meaning in stories' },
-      readAloud: { title: 'Read-Aloud', description: 'Practice reading with instant feedback' },
-      fillBlank: { title: 'Fill-in-the-Blank Quest', description: 'Complete sentences with correct words' },
-      wordBuilder: { title: 'Word Builder', description: 'Build words from syllable pieces' }
-    },
-    levels: {
-      beginner: 'Beginner',
-      intermediate: 'Intermediate', 
-      advanced: 'Advanced'
-    },
-    buttons: {
-      start: 'Start',
-      continue: 'Continue',
-      next: 'Next',
-      check: 'Check',
-      skip: 'Skip',
-      hint: 'Hint',
-      back: 'Back',
-      reset: 'Reset Progress',
-      dashboard: 'Dashboard'
-    },
-    feedback: {
-      correct: 'Great!',
-      incorrect: 'Try again',
-      perfect: 'Great reading! ⭐⭐⭐',
-      okay: 'Almost there. ⭐⭐',
-      tryAgain: "Let's try once more.",
-      progressSaved: 'Progress saved'
+    startGame: 'Start',
+    continueGame: 'Continue',
+    level: 'Level',
+    progress: 'Progress',
+    stars: 'Stars',
+    dashboard: 'Teacher/Parent Dashboard',
+    resetProgress: 'Reset Progress',
+    profile: 'Profile',
+    about: 'About',
+    home: 'Home',
+    back: 'Back',
+    next: 'Next',
+    check: 'Check',
+    skip: 'Skip',
+    hint: 'Hint',
+    tryAgain: 'Try Again',
+    great: 'Great!',
+    almostThere: 'Almost there!',
+    letsTryAgain: "Let's try once more!",
+    perfect: 'Perfect!',
+    okay: 'Okay',
+    levelComplete: 'Level Complete!',
+    progressSaved: 'Progress saved',
+    overview: 'Overview',
+    students: 'Students',
+    messages: 'Messages',
+    timeSpentThisWeek: 'Time Spent This Week',
+    focusAreas: 'Focus Areas',
+    lastActivity: 'Last Activity',
+    levelsCompleted: 'Levels Completed',
+    struggles: 'Struggles',
+    sendMock: 'Send (Mock)',
+    smsQueued: 'SMS queued (demo)',
+    playAudio: 'Play Audio',
+    record: 'Record',
+    syllableHelper: 'Syllable Helper',
+    simulate: 'Simulate',
+    gameDescriptions: {
+      wordHunt: 'Find words by meaning in passages',
+      readAloud: 'Practice reading with instant feedback',
+      fillBlank: 'Complete sentences with correct words',
+      wordBuilder: 'Build words from syllable tiles'
     }
   },
   zu: {
-    appTitle: 'BulaBooks',
-    tagline: 'Imidlalo yokufunda kumabanga 3–6',
-    games: {
-      wordHunt: { title: 'Ukuzingela Amagama', description: 'Thola amagama ngencazelo ezindabeni' },
-      readAloud: { title: 'Fundela Phezulu', description: 'Zilolonge ukufunda ngesiluleko eseshesha' },
-      fillBlank: { title: 'Gcwalisa Izikhala', description: 'Qedela imisho ngamagama afanele' },
-      wordBuilder: { title: 'Umakhi Wamagama', description: 'Yakha amagama ngezingxenye' }
-    },
-    levels: {
-      beginner: 'Isiqalo',
-      intermediate: 'Phakathi',
-      advanced: 'Phezulu'
-    },
-    buttons: {
-      start: 'Qala',
-      continue: 'Qhubeka',
-      next: 'Okulandelayo',
-      check: 'Hlola',
-      skip: 'Yeqa',
-      hint: 'Isiphakamiso',
-      back: 'Emuva',
-      reset: 'Setha Kabusha',
-      dashboard: 'Ibhodi'
-    },
-    feedback: {
-      correct: 'Kulungile!',
-      incorrect: 'Zama futhi',
-      perfect: 'Ufunde kahle! ⭐⭐⭐',
-      okay: 'Cishe lapho. ⭐⭐',
-      tryAgain: 'Asizame futhi.',
-      progressSaved: 'Inqubekelaphambili ilondoloziwe'
+    appName: 'BulaBooks',
+    tagline: 'Ukufunda okuntofontofo kusuka iBanga 3–6',
+    startGame: 'Qala',
+    continueGame: 'Qhubekela',
+    level: 'Izinga',
+    progress: 'Inqubekelaphambili',
+    stars: 'Izinkanyezi',
+    dashboard: 'Ideshibhodi Lothisha/Umzali',
+    resetProgress: 'Setha Kabusha Inqubekelaphambili',
+    profile: 'Iphrofayili',
+    about: 'Mayelana',
+    home: 'Ekhaya',
+    back: 'Buyela',
+    next: 'Okulandelayo',
+    check: 'Hlola',
+    skip: 'Yeqa',
+    hint: 'Isikhombi',
+    tryAgain: 'Zama Futhi',
+    great: 'Kuhle!',
+    almostThere: 'Ususeduze!',
+    letsTryAgain: 'Masize futhi!',
+    perfect: 'Kuphelele!',
+    okay: 'Kulungile',
+    levelComplete: 'Izinga Liqunyiwe!',
+    progressSaved: 'Inqubekelaphambili igciniwe',
+    overview: 'Ukubuka Konke',
+    students: 'Abafundi',
+    messages: 'Imilayezo',
+    timeSpentThisWeek: 'Isikhathi Esichithwe Kulesonto',
+    focusAreas: 'Izindawo Zokugxila',
+    lastActivity: 'Umsebenzi Wokugcina',
+    levelsCompleted: 'Amazinga Aqunyiwe',
+    struggles: 'Izinselelo',
+    sendMock: 'Thumela (Demo)',
+    smsQueued: 'I-SMS ifakwe emugqeni (demo)',
+    playAudio: 'Dlala Umsindo',
+    record: 'Rekhoda',
+    syllableHelper: 'Umsizi Wezihlabu',
+    simulate: 'Lingisa',
+    gameDescriptions: {
+      wordHunt: 'Thola amagama ngencazelo ezindimeni',
+      readAloud: 'Zivivinye ukufunda ngempendulo esheshayo',
+      fillBlank: 'Qedela imisho ngamagama afanele',
+      wordBuilder: 'Yakha amagama kusuka ezinhlamini zezihlabu'
     }
   },
   af: {
-    appTitle: 'BulaBooks',
-    tagline: 'Spelgebaseerde lees vir Grade 3–6',
-    games: {
-      wordHunt: { title: 'Woordjag Avontuur', description: 'Vind woorde volgens betekenis in stories' },
-      readAloud: { title: 'Lees Hardop', description: 'Oefen lees met onmiddellike terugvoer' },
-      fillBlank: { title: 'Vul-in-die-Leemte', description: 'Voltooi sinne met regte woorde' },
-      wordBuilder: { title: 'Woordbouer', description: 'Bou woorde uit lettergreep stukke' }
-    },
-    levels: {
-      beginner: 'Beginner',
-      intermediate: 'Intermediate',
-      advanced: 'Gevorderd'
-    },
-    buttons: {
-      start: 'Begin',
-      continue: 'Gaan voort',
-      next: 'Volgende',
-      check: 'Kyk',
-      skip: 'Slaan oor',
-      hint: 'Wenk',
-      back: 'Terug',
-      reset: 'Herstel Vordering',
-      dashboard: 'Dashboard'
-    },
-    feedback: {
-      correct: 'Fantasties!',
-      incorrect: 'Probeer weer',
-      perfect: 'Goeie lees! ⭐⭐⭐',
-      okay: 'Amper daar. ⭐⭐',
-      tryAgain: 'Kom ons probeer weer.',
-      progressSaved: 'Vordering gestoor'
+    appName: 'BulaBooks',
+    tagline: 'Gespeletjie lees vir Grade 3–6',
+    startGame: 'Begin',
+    continueGame: 'Gaan voort',
+    level: 'Vlak',
+    progress: 'Vordering',
+    stars: 'Sterre',
+    dashboard: 'Onderwyser/Ouer Dashboard',
+    resetProgress: 'Herstel Vordering',
+    profile: 'Profiel',
+    about: 'Omtrent',
+    home: 'Tuis',
+    back: 'Terug',
+    next: 'Volgende',
+    check: 'Kontroleer',
+    skip: 'Slaan oor',
+    hint: 'Wenk',
+    tryAgain: 'Probeer weer',
+    great: 'Uitstekend!',
+    almostThere: 'Amper daar!',
+    letsTryAgain: 'Kom ons probeer weer!',
+    perfect: 'Volmaak!',
+    okay: 'Reg',
+    levelComplete: 'Vlak Voltooi!',
+    progressSaved: 'Vordering gestoor',
+    overview: 'Oorsig',
+    students: 'Studente',
+    messages: 'Boodskappe',
+    timeSpentThisWeek: 'Tyd Spandeer Hierdie Week',
+    focusAreas: 'Fokus Areas',
+    lastActivity: 'Laaste Aktiwiteit',
+    levelsCompleted: 'Vlakke Voltooi',
+    struggles: 'Probleme',
+    sendMock: 'Stuur (Demo)',
+    smsQueued: 'SMS in tou (demo)',
+    playAudio: 'Speel Klank',
+    record: 'Neem op',
+    syllableHelper: 'Lettergreep Helper',
+    simulate: 'Simuleer',
+    gameDescriptions: {
+      wordHunt: 'Vind woorde volgens betekenis in teks',
+      readAloud: 'Oefen lees met onmiddellike terugvoer',
+      fillBlank: 'Voltooi sinne met korrekte woorde',
+      wordBuilder: 'Bou woorde uit lettergreep teëls'
     }
   },
   tn: {
-    appTitle: 'BulaBooks',
+    appName: 'BulaBooks',
     tagline: 'Metshameko ya go bala mo dikarolwaneng 3–6',
-    games: {
-      wordHunt: { title: 'Tsoma ya Mafoko', description: 'Batla mafoko ka bokao mo dipukeng' },
-      readAloud: { title: 'Bala ka Lentswe', description: 'Itlhatlhobe go bala ka kaelo e e bonako' },
-      fillBlank: { title: 'Tlatsa Sekgala', description: 'Fetsa mafoko ka mafoko a a siameng' },
-      wordBuilder: { title: 'Moagi wa Mafoko', description: 'Aga mafoko go tswa mo dikarolo' }
-    },
-    levels: {
-      beginner: 'Simolodi',
-      intermediate: 'Fa gare',
-      advanced: 'Tsweletse'
-    },
-    buttons: {
-      start: 'Simolola',
-      continue: 'Tswelela',
-      next: 'Se se latelang',
-      check: 'Tlhola',
-      skip: 'Tlola',
-      hint: 'Kaelo',
-      back: 'Morago',
-      reset: 'Seta Sesha',
-      dashboard: 'Boto'
-    },
-    feedback: {
-      correct: 'Siame!',
-      incorrect: 'Leka gape',
-      perfect: 'O badile sentle! ⭐⭐⭐',
-      okay: 'Gaufi mo. ⭐⭐',
-      tryAgain: 'A re lekeng gape.',
-      progressSaved: 'Tswelelopele e bolokilwe'
+    startGame: 'simolola',
+    continueGame: 'Tswelela',
+    level: 'bogodimo',
+    progress: 'Tswelelopele',
+    stars: 'Dinaledi',
+    dashboard: 'Dasheboto ya Morutabana/Motsadi',
+    resetProgress: 'Seta gape Kgatelopele',
+    profile: 'Porofaele',
+    about: 'Ka ga',
+    home: 'Gae',
+    back: 'Morago',
+    next: 'Latelang',
+    check: 'Tlhola',
+    skip: 'Tlolaka',
+    hint: 'Maele',
+    tryAgain: 'Leka Gape',
+    great: 'Tona!',
+    almostThere: 'Go batlile go fitlha!',
+    letsTryAgain: "A re lekeng gape!",
+    perfect: 'Itekanetsa!',
+    okay: 'Go siame',
+    levelComplete: 'Maemo a Feditswe!',
+    progressSaved: 'Kgatelopele e bolokilwe',
+    overview: 'Kakaretso',
+    students: 'Baithuti',
+    messages: 'Melaetsa',
+    timeSpentThisWeek: 'Nako e e Dirisitsweng mo Bekeng Eno',
+    focusAreas: 'Mafelo a Tsepamisomogopolo',
+    lastActivity: 'Tiro ya Bofelo',
+    levelsCompleted: 'Maemo a weditswe',
+    struggles: 'Dikgaratlho',
+    sendMock: 'Romela (Sotla)',
+    smsQueued: 'SMS e mo moleng (pontsho)',
+    playAudio: 'Tshameka Modumo',
+    record: 'Gatisa',
+    syllableHelper: 'Mothusi wa dinoko',
+    simulate: 'Etsisa',
+    gameDescriptions: {
+      wordHunt: 'Batla mafoko ka bokao mo ditemaneng',
+      readAloud: 'Ikatisetse go buisa ka pegelo ya ka bonako',
+      fillBlank: 'Feleletsa dipolelo ka mafoko a a nepagetseng',
+      wordBuilder: 'Aga mafoko go tswa mo dithaeleng tsa dinoko'
     }
   }
-} as const;
-
-export const wordHunt: Record<Language, WordHuntItem[]> = {
-  en: [
-    { passage: "The happy child ran to the big tree.", prompt: "Tap the word that means joyful.", answers: ["happy"], distractors: ["big", "tree"] },
-    { passage: "A quick fox jumped over a small log.", prompt: "Tap the synonym of fast.", answers: ["quick"], distractors: ["small", "log"] },
-    { passage: "It was a light meal before the race.", prompt: "In this sentence, what does 'light' mean?", answers: ["light"], distractors: ["meal", "race"] },
-    { passage: "The bright sun shone through the window.", prompt: "Find the word that means shining.", answers: ["bright"], distractors: ["sun", "window"] },
-    { passage: "She felt sad when her friend moved away.", prompt: "Which word shows an emotion?", answers: ["sad"], distractors: ["friend", "moved"] }
-  ],
-  zu: [
-    { passage: "Ingane ejabulile yagijima iya esihlahleni esikhulu.", prompt: "Khetha igama elisho 'joyful'.", answers: ["ejabulile"], distractors: ["esikhulu", "isihlahla"] },
-    { passage: "Ifosi esheshayo yagxuma phezu kweplanga elincane.", prompt: "Khetha igama elisho 'fast'.", answers: ["esheshayo"], distractors: ["elincane", "iplanga"] },
-    { passage: "Bekungukudla okulula ngaphambi komjaho.", prompt: "Lapha 'okulula' kusho ini?", answers: ["okulula"], distractors: ["ukudla", "umjaho"] },
-    { passage: "Ilanga elikhanyayo lakhanya ngefasitela.", prompt: "Thola igama elisho 'shining'.", answers: ["elikhanyayo"], distractors: ["ilanga", "ifasitela"] },
-    { passage: "Wazizwa elusizi lapho umngane wakhe ehamba.", prompt: "Yiliphi igama elikhombisa umuzwa?", answers: ["elusizi"], distractors: ["umngane", "ehamba"] }
-  ],
-  af: [
-    { passage: "Die bly kind hardloop na die groot boom.", prompt: "Tik die woord wat 'joyful' beteken.", answers: ["bly"], distractors: ["groot", "boom"] },
-    { passage: "'n Vinnige jakkals spring oor 'n klein stomp.", prompt: "Tik die sinoniem vir 'fast'.", answers: ["Vinnige"], distractors: ["klein", "stomp"] },
-    { passage: "Dit was 'n ligte ete voor die wedren.", prompt: "Wat beteken 'ligte' hier?", answers: ["ligte"], distractors: ["ete", "wedren"] },
-    { passage: "Die helder son skyn deur die venster.", prompt: "Vind die woord wat 'shining' beteken.", answers: ["helder"], distractors: ["son", "venster"] },
-    { passage: "Sy was hartseer toe haar vriend wegtrek.", prompt: "Watter woord wys 'n emosie?", answers: ["hartseer"], distractors: ["vriend", "wegtrek"] }
-  ],
-  tn: [
-    { passage: "Ngwana yo o itumeleng o ne a tabogela setlhareng se segolo.", prompt: "Tobetsa lefoko le le rayang 'joyful'.", answers: ["itumeleng"], distractors: ["segolo", "setlhare"] },
-    { passage: "Phokojwe e e bonako e ne ya tlola godimo ga logong lo lonnye.", prompt: "Tobetsa lefoko le le tshwanang le 'fast'.", answers: ["bonako"], distractors: ["lonnye", "logong"] },
-    { passage: "E ne e le dijo tse di bobebe pele ga lebelo.", prompt: "Mo polelong eno, 'bobebe' e kaya eng?", answers: ["bobebe"], distractors: ["dijo", "lebelo"] },
-    { passage: "Letsatsi le le phadimang le ne la phatsima mo fensthereng.", prompt: "Bona lefoko le le rayang 'shining'.", answers: ["phadimang"], distractors: ["letsatsi", "fensthering"] },
-    { passage: "O ne a utlwa bohutsana fa tsala ya gagwe e ne ya tsamaya.", prompt: "Ke lefoko lefe le le bontshang maikutlo?", answers: ["bohutsana"], distractors: ["tsala", "tsamaya"] }
-  ]
 };
 
-export const readAloud: Record<Language, ReadAloudItem[]> = {
+export const wordHunt: GameContent = {
   en: [
-    { text: "The cat sits on the mat.", syllables: "The cat sits on the mat." },
-    { text: "The baker bakes fresh bread.", syllables: "The ba-ker bakes fresh bread." },
-    { text: "After the rain, the bright rainbow appeared.", syllables: "Af-ter the rain, the bright rain-bow ap-peared." },
-    { text: "Children play in the sunny garden.", syllables: "Chil-dren play in the sun-ny gar-den." },
-    { text: "The blue bird sings sweetly in the morning.", syllables: "The blue bird sings sweet-ly in the mor-ning." }
+    { passage: "The happy child ran to the big tree.", prompt: "Tap the word that means joyful.", answers: ["happy"], distractors: ["big","tree"] },
+    { passage: "A quick fox jumped over a small log.", prompt: "Tap the synonym of fast.", answers: ["quick"], distractors: ["small","log"] },
+    { passage: "The bright sun shines on the green grass.", prompt: "Find the word that means colorful vegetation.", answers: ["grass"], distractors: ["bright","sun"] },
+    { passage: "She felt sad when her friend moved away.", prompt: "Which word shows an emotion?", answers: ["sad"], distractors: ["friend","moved"] },
+    { passage: "It was a light meal before the race.", prompt: "In this sentence, what does 'light' mean?", answers: ["small"], distractors: ["bright"] },
+    { passage: "The old man walked slowly down the path.", prompt: "Find two words that describe movement.", answers: ["walked","slowly"], distractors: ["old","path"] },
+    { passage: "Birds fly high in the blue sky.", prompt: "Choose words about location.", answers: ["high","sky"], distractors: ["Birds","blue"] },
+    { passage: "The cold wind made her shiver with fear.", prompt: "Find words that describe feelings or sensations.", answers: ["cold","shiver","fear"], distractors: ["wind","made"] },
+    { passage: "He spoke softly to calm the crying baby.", prompt: "Which words relate to sound?", answers: ["spoke","softly","crying"], distractors: ["calm","baby"] },
+    { passage: "The sharp knife can cut through the tough meat easily.", prompt: "Find three words that describe texture or difficulty.", answers: ["sharp","tough","easily"], distractors: ["knife","cut","meat"] },
+    { passage: "The teacher explained the hard lesson clearly to confused students.", prompt: "Identify words about difficulty and understanding.", answers: ["hard","clearly","confused"], distractors: ["teacher","lesson","students"] },
+    { passage: "During the storm, lightning struck the tall building fiercely.", prompt: "Find words that show intensity or force.", answers: ["storm","struck","fiercely"], distractors: ["lightning","tall","building"] },
+    { passage: "The graceful dancer moved elegantly across the wooden stage.", prompt: "Choose words that describe beauty in movement.", answers: ["graceful","elegantly"], distractors: ["dancer","wooden","stage"] },
+    { passage: "Scientists carefully observed the rare species in its natural habitat.", prompt: "Find words related to scientific study.", answers: ["carefully","observed","species","habitat"], distractors: ["rare","natural"] },
+    { passage: "The ancient castle stood majestically on the rocky cliff overlooking the vast ocean.", prompt: "Identify words that convey grandeur or scale.", answers: ["ancient","majestically","vast"], distractors: ["castle","rocky","cliff","ocean"] }
   ],
   zu: [
-    { text: "Ikati ihlezi emacansini.", syllables: "I-ka-ti i-hle-zi e-ma-can-si-ni." },
+    { passage: "Ingane ejabulile yagijima iya esihlahleni esikhulu.", prompt: "Khetha igama elisho 'joyful'.", answers: ["ejabulile"], distractors: ["esikhulu","esihlahla"] },
+    { passage: "Ifosi esheshayo yagxuma phezu kweplanga elincane.", prompt: "Khetha igama elisho 'fast'.", answers: ["esheshayo"], distractors: ["elincane","iplanga"] },
+    { passage: "Ilanga elikhanyayo likhanya etshanini oluhlaza.", prompt: "Thola igama elisho 'vegetation'.", answers: ["etshanini"], distractors: ["elikhanyayo","ilanga"] },
+    { passage: "Wazizwa edabukile lapho umngane wakhe esuka.", prompt: "Yiliphi igama elikhombisa umuzwa?", answers: ["edabukile"], distractors: ["umngane","esuka"] },
+    { passage: "Bekungukudla okulula ngaphambi komjaho.", prompt: "Lapha 'okulula' kusho ini?", answers: ["okuncane"], distractors: ["okukhanyayo"] },
+    { passage: "Indoda endala yahamba kancane ngomgwaqo.", prompt: "Thola amagama amabili achaza ukuhamba.", answers: ["yahamba","kancane"], distractors: ["endala","mgwaqo"] },
+    { passage: "Izinyoni zindiza phezulu esibhakabhakeni esiluhlaza.", prompt: "Khetha amagama amayelana nendawo.", answers: ["phezulu","esibhakabhakeni"], distractors: ["Izinyoni","esiluhlaza"] },
+    { passage: "Umoya omkhathazayo wamenza aquqe ngokwesaba.", prompt: "Thola amagama achaza imizwa noma imingonosho.", answers: ["omkhathazayo","aquqe","ngokwesaba"], distractors: ["umoya","wamenza"] },
+    { passage: "Wakhuluma kanchane ukuze athule umntwana okhalayo.", prompt: "Yimaphi amagama ahlobene nomsindo?", answers: ["wakhuluma","kanchane","okhalayo"], distractors: ["athule","umntwana"] },
+    { passage: "Umese obukhali ungasika inyama elukhuni kalula.", prompt: "Thola amagama amathathu achaza ukuthinta noma ubunzima.", answers: ["obukhali","elukhuni","kalula"], distractors: ["umese","sika","inyama"] },
+    { passage: "Uthisha wachaza isifundo esinzima ngokucacile kubafundi abadidekile.", prompt: "Khomba amagama amayelana nobunzima nokuqonda.", answers: ["esinzima","ngokucacile","abadidekile"], distractors: ["uthisha","isifundo","kubafundi"] },
+    { passage: "Ngesikhathi sesivunguvungu, umbani wabetha isakhiwo eside ngamandla.", prompt: "Thola amagama abonisa ukuqina noma amandla.", answers: ["sesivunguvungu","wabetha","ngamandla"], distractors: ["umbani","eside","isakhiwo"] },
+    { passage: "Umdansi onembeko wahamba ngobuhle egumeni lokhuni.", prompt: "Khetha amagama achaza ubuhle ekuhambeni.", answers: ["onembeko","ngobuhle"], distractors: ["umdansi","lokhuni","egumeni"] },
+    { passage: "Ososayensi babuka ngokucophelela uhlobo oluyinhle endaweni yaso yemvelo.", prompt: "Thola amagama ahlobene nokufunda kwesayensi.", answers: ["ngokucophelela","babuka","uhlobo","yemvelo"], distractors: ["oluyinhle","yemvelo"] },
+    { passage: "Inqaba yakudala yayimi ngobumpumulo edwaleni eliqinile ibheke ulwandle olukhulu.", prompt: "Khomba amagama adalula ubukhulu noma isisindo.", answers: ["yakudala","ngobumpumulo","olukhulu"], distractors: ["inqaba","eliqinile","edwaleni","ulwandle"] }
+  ],
+  af: [
+    { passage: "Die bly kind hardloop na die groot boom.", prompt: "Tik die woord wat 'joyful' beteken.", answers: ["bly"], distractors: ["groot","boom"] },
+    { passage: "'n Vinnige jakkals spring oor 'n klein stomp.", prompt: "Tik die sinoniem vir 'fast'.", answers: ["Vinnige"], distractors: ["klein","stomp"] },
+    { passage: "Die helder son skyn op die groen gras.", prompt: "Vind die woord wat 'vegetation' beteken.", answers: ["gras"], distractors: ["helder","son"] },
+    { passage: "Sy was hartseer toe haar vriend weggetrek het.", prompt: "Watter woord toon 'n emosie?", answers: ["hartseer"], distractors: ["vriend","weggetrek"] },
+    { passage: "Dit was 'n ligte ete voor die wedren.", prompt: "Wat beteken 'ligte' hier?", answers: ["klein"], distractors: ["helder"] },
+    { passage: "Die ou man loop stadig af op die pad.", prompt: "Vind twee woorde wat beweging beskryf.", answers: ["loop","stadig"], distractors: ["ou","pad"] },
+    { passage: "Voëls vlieg hoog in die blou lug.", prompt: "Kies woorde oor ligging.", answers: ["hoog","lug"], distractors: ["Voëls","blou"] },
+    { passage: "Die koue wind het haar laat rilling van vrees.", prompt: "Vind woorde wat gevoelens of sensasies beskryf.", answers: ["koue","rilling","vrees"], distractors: ["wind","laat"] },
+    { passage: "Hy praat sag om die huilende baba te kalmeer.", prompt: "Watter woorde hou verband met klank?", answers: ["praat","sag","huilende"], distractors: ["kalmeer","baba"] },
+    { passage: "Die skerp mes kan deur die taai vleis maklik sny.", prompt: "Vind drie woorde wat tekstuur of moeilikheid beskryf.", answers: ["skerp","taai","maklik"], distractors: ["mes","sny","vleis"] },
+    { passage: "Die onderwyser het die moeilike les duidelik aan verwarde studente verduidelik.", prompt: "Identifiseer woorde oor moeilikheid en begrip.", answers: ["moeilike","duidelik","verwarde"], distractors: ["onderwyser","les","studente"] },
+    { passage: "Gedurende die storm het weerlig die hoë gebou heftig getref.", prompt: "Vind woorde wat intensiteit of krag toon.", answers: ["storm","getref","heftig"], distractors: ["weerlig","hoë","gebou"] },
+    { passage: "Die grasieuze danser beweeg elegant oor die hout verhoog.", prompt: "Kies woorde wat skoonheid in beweging beskryf.", answers: ["grasieuze","elegant"], distractors: ["danser","hout","verhoog"] },
+    { passage: "Wetenskaplikes het die skaars spesie versigtig in sy natuurlike habitat waargeneem.", prompt: "Vind woorde wat verband hou met wetenskaplike studie.", answers: ["versigtig","waargeneem","spesie","habitat"], distractors: ["skaars","natuurlike"] },
+    { passage: "Die antieke kasteel staan majesteitlik op die rotsagtige klip met uitsig oor die uitgestrekte oseaan.", prompt: "Identifiseer woorde wat grootsheid of skaal oordra.", answers: ["antieke","majesteitlik","uitgestrekte"], distractors: ["kasteel","rotsagtige","klip","oseaan"] }
+  ],
+  tn: [
+    { passage: "Ngwana yo o itumetseng a tabogela kwa setlhareng se segolo.", prompt: "Konya lefoko le le rayang boitumelo.", answers: ["itumetse"], distractors: ["tona","setlhare"] },
+    { passage: "Phokoje e e bofefo e ne ya tlola mo godimo ga kota e nnye.", prompt: "Konya lefoko le le tshwanang la ka bonako.", answers: ["ka pele"], distractors: ["small","legong"] },
+    { passage: "Letsatsi le le phatsimang le phatsima mo bojannyeng jo botala.", prompt: "Batla lefoko le le kayang dimela tse di mebalabala.", answers: ["tlhaga"], distractors: ["phatsima","letsatsi"] },
+    { passage: "O ne a ikutlwa a maswabi fa tsala ya gagwe e ne ya tsamaya.", prompt: "Ke lefoko lefe le bontshang maikutlo?", answers: ["maswabi"], distractors: ["tsala","tsamaya"] },
+    { passage: "E ne e le dijo tse bonolo pele ga papadi.", prompt: "Mo polelong e, 'bonolo' e kaya eng?", answers: ["nnyane"], distractors: ["tshelela"] },
+    { passage: "Monna yo mosha o ile a tsamaya butle mo tseleng.", prompt: "Batla mafoko a mabedi a a tlhalosang go tsamaya.", answers: ["tsamaya","butle"], distractors: ["mosha","tsela"] },
+    { passage: "Dinonyane di fofa kwa godimo mo legodimong le le boputswa.", prompt: "Kgetha mafoko a a mabapi le lefelong.", answers: ["kgodimong","legodimo"], distractors: ["Dinonyane","boputswa"] },
+    { passage: "Moya o o phodileng o mo dirile go tuka ka botlhoko.", prompt: "Batla mafoko a a tlhalosang maikutlo kgotsa maikutlo a mmele.", answers: ["phodile","tuka","botlhoko"], distractors: ["moya","o dirile"] },
+    { passage: "O ne a bua ka bonolo go khutlisetsa ngwana yo o utlwang maswabi.", prompt: "Ke mafoko afe a a amanang le modumo?", answers: ["bua","ka bonolo","utlwa maswabi"], distractors: ["khutsa","ngwana"] },
+    { passage: "Sepepe se se se kgethegileng se ka se arola nama e e thata ka bonolo.", prompt: "Batla mafoko a mararo a a tlhalosang sebopego kgotsa bothata.", answers: ["se se kgethegileng","tata","ka bonolo"], distractors: ["sepepe","arola","nama"] },
+    { passage: "Morutabana o ne a tlhalosa thuto e e thata ka kelotlhoko go baithuti ba ba ferekanyang.", prompt: "Tlhopha mafoko a a mabapi le bothata le tlhaloganyo.", answers: ["thata","ka kelotlhoko","ferekanyang"], distractors: ["morutabana","thuto","baithuti"] },
+    { passage: "Mo phitlhong, lelekanyo le le botlhoko le gogile mo ntlong e e telele ka maatla.", prompt: "Batla mafoko a a bontshang maatla kgotsa go tsenya maatla.", answers: ["phitlho","gogile","ka maatla"], distractors: ["lelekanyo","telele","ntlo"] },
+    { passage: "Motlatsi yo o motle o ne a tsamaya ka bokgoni mo sethaleng sa lehong.", prompt: "Kgetha mafoko a a tlhalosang botle mo motsamaong.", answers: ["motle","ka bokgoni"], distractors: ["motlatsi","lehong","sethala"] },
+    { passage: "Basayense ba ne ba lebelela ka kelotlhoko mefuta e e raraaneng mo lefelong la yone la tlhago.", prompt: "Batla mafoko a a amanang le thuto ya saense.", answers: ["ka kelotlhoko","lebelela","mefuta","lefelo la tlhago"], distractors: ["raraaneng","tlhago"] },
+    { passage: "Ntlo ya bogologolo e eme ka boikanyego mo leratong la mabota a matlhagatlhaga e lebeletse lewatle le le kgolo.", prompt: "Tlhopha mafoko a a bontshang bogolo kgotsa bophara.", answers: ["bogologolo","ka boikanyego","kgolo"], distractors: ["ntlo","matlhagatlhaga","lerato","leatle"] }
+  ],
+};
+
+export const readAloud: GameContent = {
+  en: [
+    { text: "The cat sits on the mat.", syllables: "The cat sits on the mat." },
+    { text: "Birds fly in the sky.", syllables: "Birds fly in the sky." },
+    { text: "I like to read books.", syllables: "I like to read books." },
+    { text: "The sun is very bright today.", syllables: "The sun is ver-y bright to-day." },
+    { text: "The baker bakes fresh bread.", syllables: "The ba-ker bakes fresh bread." },
+    { text: "Children play in the park happily.", syllables: "Chil-dren play in the park hap-pi-ly." },
+    { text: "The beautiful garden has many flowers.", syllables: "The beau-ti-ful gar-den has ma-ny flow-ers." },
+    { text: "Students listen carefully to their teacher.", syllables: "Stu-dents lis-ten care-ful-ly to their tea-cher." },
+    { text: "The elephant walked slowly through the forest.", syllables: "The el-e-phant walked slow-ly through the for-est." },
+    { text: "After the rain, the bright rainbow appeared.", syllables: "Af-ter the rain, the bright rain-bow ap-peared." },
+    { text: "The hardworking farmer plants vegetables in spring.", syllables: "The hard-work-ing far-mer plants veg-e-ta-bles in spring." },
+    { text: "Scientists discovered an interesting species yesterday.", syllables: "Sci-en-tists dis-cov-ered an in-ter-est-ing spe-cies yes-ter-day." },
+    { text: "The magnificent castle overlooks the peaceful valley below.", syllables: "The mag-nif-i-cent cas-tle o-ver-looks the peace-ful val-ley be-low." },
+    { text: "Enthusiastic musicians performed beautifully at the concert.", syllables: "En-thu-si-as-tic mu-si-cians per-formed beau-ti-ful-ly at the con-cert." },
+    { text: "The adventurous explorers carefully documented their extraordinary journey.", syllables: "The ad-ven-tur-ous ex-plor-ers care-ful-ly doc-u-ment-ed their ex-tra-or-di-nar-y jour-ney." }
+  ],
+  zu: [
+    { text: "Inja ihlezi emacansini.", syllables: "I-nja i-hle-zi e-ma-can-si-ni." },
+    { text: "Izinyoni zindiza esibhakabhakeni.", syllables: "I-zi-nyo-ni zin-di-za e-si-bha-ka-bha-ke-ni." },
+    { text: "Ngiyathanda ukufunda izincwadi.", syllables: "Ngi-ya-than-da u-ku-fun-da i-zin-cwa-di." },
+    { text: "Ilanga likhanya kakhulu namuhla.", syllables: "I-la-nga li-khan-ya ka-khu-lu na-mu-hla." },
     { text: "Umbhaki ubhaka isinkwa esisha.", syllables: "U-mbha-ki u-bha-ka i-sin-kwa e-si-sha." },
+    { text: "Izingane zidlala egunjini ngenjabulo.", syllables: "I-zi-nga-ne zi-dla-la e-gun-ji-ni ngen-ja-bu-lo." },
+    { text: "Engadi enhle inamalungu amaningi.", syllables: "En-ga-di en-hle i-na-ma-lu-ngu a-ma-ni-ngi." },
+    { text: "Abafundi bamamela uthisha wabo ngokucophelela.", syllables: "A-ba-fun-di ba-ma-me-la u-thi-sha wa-bo ngo-ku-co-phe-le-la." },
+    { text: "Indlovu yahamba kancane ehlathini.", syllables: "In-dlo-vu ya-ham-ba kan-ca-ne eh-la-thi-ni." },
     { text: "Ngemva kwemvula, kwavela uthingo lwenkosazana.", syllables: "Nge-mva kwe-mvu-la, kwa-ve-la u-thin-go lwen-ko-sa-za-na." },
-    { text: "Izingane zidlala engadini enelanga.", syllables: "I-zi-nga-ne zi-dla-la e-nga-di-ni e-ne-la-nga." },
-    { text: "Inyoni eluhlaza icula kahle ekuseni.", syllables: "I-nyo-ni e-lu-hla-za i-cu-la ka-hle e-ku-se-ni." }
+    { text: "Umlimi osebenza kanzima uhlanyela imifino ehlobo.", syllables: "U-mli-mi o-se-ben-za kan-zi-ma u-hla-nye-la i-mi-fi-no eh-lo-bo." },
+    { text: "Ososayensi bathole uhlobo oluvuselela intshisekelo izolo.", syllables: "O-so-sa-yen-si ba-tho-le u-hlo-bo o-lu-vu-se-le-la in-tshi-se-ke-lo i-zo-lo." },
+    { text: "Inqaba enhle kakhulu ibheka isigodi esiphilile ngaphansi.", syllables: "In-qa-ba en-hle ka-khu-lu i-bhe-ka i-si-go-di e-si-phi-li-le nga-phan-si." },
+    { text: "Abaculi abanomdlandla badlale kahle ekonsethini.", syllables: "A-ba-cu-li a-ba-no-mdlan-dla ba-dla-le kah-le e-kon-se-thi-ni." },
+    { text: "Abaphenyululi abanesibindi babhalisa ngokucophelela uhambo lwabo olumangalisayo.", syllables: "A-ba-phe-nyu-lu-li a-ba-ne-si-bin-di ba-bha-li-sa ngo-ku-co-phe-le-la u-ham-bo lwa-bo o-lu-man-ga-li-sa-yo." }
   ],
   af: [
     { text: "Die kat sit op die mat.", syllables: "Die kat sit op die mat." },
+    { text: "Voëls vlieg in die lug.", syllables: "Vo-ëls vlieg in die lug." },
+    { text: "Ek hou daarvan om boeke te lees.", syllables: "Ek hou daar-van om boe-ke te lees." },
+    { text: "Die son is baie helder vandag.", syllables: "Die son is bai-e hel-der van-dag." },
     { text: "Die bakker bak vars brood.", syllables: "Die bak-ker bak vars brood." },
+    { text: "Kinders speel gelukkig in die park.", syllables: "Kin-ders speel ge-luk-kig in die park." },
+    { text: "Die pragtige tuin het baie blomme.", syllables: "Die prag-ti-ge tuin het bai-e blom-me." },
+    { text: "Studente luister aandagtig na hul onderwyser.", syllables: "Stu-den-te luis-ter aan-dag-tig na hul on-der-wy-ser." },
+    { text: "Die olifant loop stadig deur die woud.", syllables: "Die o-li-fant loop sta-dig deur die woud." },
     { text: "Na die reën het 'n helder reënboog verskyn.", syllables: "Na die reën het 'n hel-der reën-boog ver-skyn." },
-    { text: "Kinders speel in die sonnige tuin.", syllables: "Kin-ders speel in die son-ni-ge tuin." },
-    { text: "Die blou voël sing mooi in die oggend.", syllables: "Die blou vo-ël sing mooi in die og-gend." }
+    { text: "Die hardwerkende boer plant groente in die lente.", syllables: "Die hard-wer-ken-de boer plant groen-te in die len-te." },
+    { text: "Wetenskaplikes het gister 'n interessante spesie ontdek.", syllables: "We-ten-skap-li-kes het gis-ter 'n in-te-res-san-te spe-sie ont-dek." },
+    { text: "Die pragtige kasteel kyk uit oor die vreedsame vallei onder.", syllables: "Die prag-ti-ge kas-teel kyk uit oor die vreeds-a-me val-lei on-der." },
+    { text: "Entoesiastiese musikante het pragtig by die konsert gespeel.", syllables: "En-toe-sias-tie-se mu-si-kan-te het prag-tig by die kon-sert ge-speel." },
+    { text: "Die avontuurlustige ontdekkingsreisigers het hul buitengewone reis versigtig gedokumenteer.", syllables: "Die a-von-tuur-lus-ti-ge ont-dek-kings-rei-si-gers het hul bui-ten-ge-wo-ne reis ver-sig-tig ge-do-ku-men-teer." }
   ],
   tn: [
-    { text: "Katse e dule mo mateng.", syllables: "Ka-tse e du-le mo ma-te-ng." },
-    { text: "Mobaki o baka senkgwe se sesha.", syllables: "Mo-ba-ki o ba-ka sen-kgwe se se-sha." },
-    { text: "Morago ga pula, go ne ga tlhaga mowa o o phadimang.", syllables: "Mo-ra-go ga pu-la, go ne ga tlha-ga mo-wa o o pha-di-mang." },
-    { text: "Bana ba tshameka mo tshimong e e nang le letsatsi.", syllables: "Ba-na ba tsha-me-ka mo tshi-mo-ng e e na-ng le le-tsa-tsi." },
-    { text: "Nonyane e e talasetso e opela sentle mo mosong.", syllables: "No-nya-ne e e ta-la-se-tso e o-pe-la sen-tle mo mo-so-ng." }
+    { text: "Katse e nna mo matlhakoreng.", syllables: "Kat-se e nna mo mat-lha-ko-reng." },
+    { text: "Dinonyane di fofa mo legodimong.", syllables: "Di-no-nya-ne di fo-fa mo le-go-di-mong." },
+    { text: "Ke rata go bala dibuka.", syllables: "Ke ra-ta go ba-la di-bu-ka." },
+    { text: "Letlha la letsatsi le lesedi thata gompieno.", syllables: "Let-lha la let-sat-swe le le-se-di tha-ta gom-pi-e-no." },
+    { text: "Mofeki o bake borotho jo bo bosha.", syllables: "Mo-fe-ki o ba-ke bo-ro-tho jo bo bo-sha." },
+    { text: "Bana ba bapala mo pampiring ka boitumelo.", syllables: "Ba-na ba ba-pa-la mo pam-pi-ring ka boi-tu-me-lo." },
+    { text: "Tlhare e ntle e na le malatsi a mantsi a merafoko.", syllables: "Tlha-re e ntle e na le ma-la-tsi a man-tsi a me-ra-fo-ko." },
+    { text: "Baithuti ba reetsa morutabana ka kelotlhoko.", syllables: "Bai-thu-ti ba re-et-sa mo-ru-ta-ba-na ka ke-lot-lho-ko." },
+    { text: "Tlou e ile ya tsamaya butle mo naga.", syllables: "Tlo-u e ile ya tsa-ma-ya bu-tle mo na-ga." },
+    { text: "Moriti o mosweu o tlhageletse morago ga pula.", syllables: "Mo-ri-ti o mo-swe-u o tlhag-e-let-se mo-ra-go ga pu-la." },
+    { text: "Mmualami yo o itlhagisang o lema meroho mo selemo.", syllables: "Mmu-a-la-mi yo o it-lha-gi-sang o le-ma me-ro-ho mo se-le-mo." },
+    { text: "Basayense ba ile ba bona mefuta e e kgatlhang maobane.", syllables: "Ba-sa-yen-se ba ile ba bo-na me-fu-ta e e kgat-lhang ma-o-ba-ne." },
+    { text: "Ntlo e e kgolo e lebeletsa letsha le le khutsitseng ka tlase.", syllables: "Ntlo e e kgo-lo e le-be-let-sa let-sha le le khut-sit-seng ka ka-tla-se." },
+    { text: "Bathusi ba ba itumedisang ba itlhagise ka bokgoni mo konsereteng.", syllables: "Ba-thu-si ba ba it-u-me-di-sang ba it-lha-gi-se ka bo-kgo-ni mo kon-se-re-teng." },
+    { text: "Baporofeti ba ba itshwarang ka kelotlhoko ba kwadile ka botlalo ka loeto lwa bone le le kgethegileng.", syllables: "Ba-po-ro-fe-ti ba ba it-shwa-rang ka ke-lot-lho-ko ba kwa-di-le ka bo-tla-lo ka lo-e-to lwa bo-ne le le kge-the-gi-le." }
   ]
 };
 
-export const fillBlank: Record<Language, FillBlankItem[]> = {
+export const fillBlank: GameContent = {
   en: [
-    { sentence: "The boy is ___ to school.", options: ["walking", "walk", "walked"], answer: "walking", hint: "Think about action happening now" },
-    { sentence: "The dog drank ___.", options: ["water", "waters", "watering"], answer: "water", hint: "What do animals drink?" },
-    { sentence: "She sat ___ the tree for shade.", options: ["under", "over", "behind"], answer: "under", hint: "Where do you go for shade?" },
-    { sentence: "The ___ is shining brightly today.", options: ["sun", "moon", "star"], answer: "sun", hint: "What shines during the day?" },
-    { sentence: "I need to ___ my homework.", options: ["do", "did", "doing"], answer: "do", hint: "What comes after 'need to'?" }
+    { sentence: "The boy is ___ to school.", options: ["walking","walk","walked"], answer: "walking", hint: "Think about what is happening now" },
+    { sentence: "The dog drank ___.", options: ["water","waters","watering"], answer: "water", hint: "What do animals drink?" },
+    { sentence: "She reads ___ every night.", options: ["book","books","booking"], answer: "books", hint: "More than one" },
+    { sentence: "The bird flies ___ in the sky.", options: ["high","height","highly"], answer: "high", hint: "How does the bird fly?" },
+    { sentence: "She sat ___ the tree for shade.", options: ["under","over","behind"], answer: "under", hint: "Where do you sit for shade?" },
+    { sentence: "The students ___ hard for their exam.", options: ["study","studies","studying"], answer: "study", hint: "What do students do for exams?" },
+    { sentence: "He ___ his homework before dinner.", options: ["finished","finish","finishing"], answer: "finished", hint: "This already happened" },
+    { sentence: "The flowers ___ beautiful in spring.", options: ["look","looks","looking"], answer: "look", hint: "Flowers is plural" },
+    { sentence: "She will ___ her friend tomorrow.", options: ["visit","visited","visiting"], answer: "visit", hint: "This will happen in the future" },
+    { sentence: "The children were ___ in the playground.", options: ["playing","play","played"], answer: "playing", hint: "They were doing this action" },
+    { sentence: "The teacher ___ the lesson clearly.", options: ["explained","explain","explaining"], answer: "explained", hint: "This happened in the past" },
+    { sentence: "Birds ___ south in winter.", options: ["migrate","migrates","migrating"], answer: "migrate", hint: "Birds is plural" },
+    { sentence: "The scientist ___ conducting an important experiment.", options: ["is","are","was"], answer: "is", hint: "The scientist is singular and this is happening now" },
+    { sentence: "Students must ___ their assignments on time.", options: ["submit","submits","submitted"], answer: "submit", hint: "What must students do?" },
+    { sentence: "The orchestra ___ beautifully at last night's concert.", options: ["performed","perform","performing"], answer: "performed", hint: "This happened last night" }
   ],
   zu: [
-    { sentence: "Umfana uya ___ esikoleni.", options: ["ngokuhamba", "ukuhamba", "wahamba"], answer: "ngokuhamba", hint: "Cabanga ngento eyenzeka manje" },
-    { sentence: "Inja iphuza ___.", options: ["amanzi", "amanzi amaningi", "isinkwa"], answer: "amanzi", hint: "Yini ezilwane eziyiphuzayo?" },
-    { sentence: "Uhleli ___ isihlahla ukuze athole umthunzi.", options: ["ngaphansi", "phezulu", "ngemuva"], answer: "ngaphansi", hint: "Uyaphi uma ufuna umthunzi?" },
-    { sentence: "___ likhanya kakhulu namuhla.", options: ["Ilanga", "Inyanga", "Inkanyezi"], answer: "Ilanga", hint: "Yini ekhanya emini?" },
-    { sentence: "Ngidinga ___ umsebenzi wesikole.", options: ["ukwenza", "ngenza", "ngizokwenza"], answer: "ukwenza", hint: "Yini elandela 'ngidinga'?" }
+    { sentence: "Umfana uya ___ esikoleni.", options: ["hamba","ukuhamba","ehamba"], answer: "ehamba", hint: "Ucabanga ngalokho okwenzeka manje" },
+    { sentence: "Inja iphuza ___.", options: ["amanzi","amanzi amaningi","ukuphuza"], answer: "amanzi", hint: "Yini ezilwane eziyiphuzayo?" },
+    { sentence: "Ufunda ___ zonke zobusuku.", options: ["incwadi","izincwadi","ukufunda"], answer: "izincwadi", hint: "Ngaphezulu koyedwa" },
+    { sentence: "Inyoni indiza ___ esibhakabhakeni.", options: ["phezulu","ukuphakama","ngophezulu"], answer: "phezulu", hint: "Indiza kanjani inyoni?" },
+    { sentence: "Wahlala ___ isihlahla ukuthola umthunzi.", options: ["ngaphansi","ngaphezulu","ngemuva"], answer: "ngaphansi", hint: "Uhlala kuphi ukuthola umthunzi?" },
+    { sentence: "Abafundi ___ kanzima ukuze benze vivinyo labo.", options: ["bafunda","bayafunda","ukufunda"], answer: "bayafunda", hint: "Abafundi benzani uma bevivinya?" },
+    { sentence: "Waqeda ___ yakhe ngaphambi kokudla kwantambama.", options: ["umsebenzi","ukuqeda","eqeda"], answer: "umsebenzi", hint: "Lokhu sekwenzekile" },
+    { sentence: "Amalungu ___ amahle ehlobo.", options: ["abukeka","awabukeki","bukeka"], answer: "abukeka", hint: "Amalungu amaningi" },
+    { sentence: "Uzovakashela ___ yakhe kusasa.", options: ["umngane","umngani","kubangane"], answer: "umngane", hint: "Lokhu kuzokwenzeka kusasa" },
+    { sentence: "Izingane ___ egunjini lokudlala.", options: ["bezidlala","beludla","zidlala"], answer: "bezidlala", hint: "Bezenza lesi senzo" },
+    { sentence: "Uthisha ___ isifundo ngokucacile.", options: ["wachaza","uchaza","echaza"], answer: "wachaza", hint: "Lokhu kwenzeka esikhathini esedlule" },
+    { sentence: "Izinyoni ___ eningizimu ebusika.", options: ["ziyafuduka","ifuduka","zifuduka"], answer: "ziyafuduka", hint: "Izinyoni zimaningi" },
+    { sentence: "Ososayensi ___ ucwaningo olubalulekile.", options: ["uyenza","wenza","eyenza"], answer: "uyenza", hint: "Ososayensi munye futhi lokhu kwenzeka manje" },
+    { sentence: "Abafundi kumele ___ imisebenzi yabo ngesikhathi.", options: ["bayinikeze","banikeze","ukunikeza"], answer: "bayinikeze", hint: "Abafundi kumele benzeni?" },
+    { sentence: "I-orchestra ___ kahle ekonsethini izolo ebusuku.", options: ["yadlala","idlala","dlala"], answer: "yadlala", hint: "Lokhu kwenzeka izolo ebusuku" }
   ],
   af: [
-    { sentence: "Die seun ___ skool toe.", options: ["loop", "looping", "geloop"], answer: "loop", hint: "Dink aan aksie wat nou gebeur" },
-    { sentence: "Die hond het ___ gedrink.", options: ["water", "waters", "waterig"], answer: "water", hint: "Wat drink diere?" },
-    { sentence: "Sy sit ___ die boom vir koelte.", options: ["onder", "oor", "agter"], answer: "onder", hint: "Waar gaan jy vir skaduwee?" },
-    { sentence: "Die ___ skyn helder vandag.", options: ["son", "maan", "ster"], answer: "son", hint: "Wat skyn gedurende die dag?" },
-    { sentence: "Ek moet my huiswerk ___.", options: ["doen", "gedoen", "aan die doen"], answer: "doen", hint: "Wat kom na 'moet'?" }
+    { sentence: "Die seun ___ skool toe.", options: ["loop","looping","geloop"], answer: "loop", hint: "Dink aan wat nou gebeur" },
+    { sentence: "Die hond het ___ gedrink.", options: ["water","waters","waterig"], answer: "water", hint: "Wat drink diere?" },
+    { sentence: "Sy lees ___ elke aand.", options: ["boek","boeke","boek lees"], answer: "boeke", hint: "Meer as een" },
+    { sentence: "Die voël vlieg ___ in die lug.", options: ["hoog","hoogte","hoog vlieg"], answer: "hoog", hint: "Hoe vlieg die voël?" },
+    { sentence: "Sy sit ___ die boom vir koelte.", options: ["onder","oor","agter"], answer: "onder", hint: "Waar sit jy vir koelte?" },
+    { sentence: "Die studente ___ hard vir hul eksamen.", options: ["studeer","studies","studeer"], answer: "studeer", hint: "Wat maak studente vir eksamens?" },
+    { sentence: "Hy het sy huiswerk voor ete ___.", options: ["klaar gemaak","klaar maak","maak klaar"], answer: "klaar gemaak", hint: "Dit het reeds gebeur" },
+    { sentence: "Die blomme ___ mooi in die lente.", options: ["lyk","lyke","gekyk"], answer: "lyk", hint: "Blomme is meervoud" },
+    { sentence: "Sy sal môre haar vriend ___.", options: ["besoek","besoek het","besoeking"], answer: "besoek", hint: "Dit sal môre gebeur" },
+    { sentence: "Die kinders was op die speelgrond aan die ___.", options: ["speel","gespeel","speletjies"], answer: "speel", hint: "Hulle was besig met hierdie aksie" },
+    { sentence: "Die onderwyser het die les duidelik ___.", options: ["verduidelik","verduidelik","verduideliking"], answer: "verduidelik", hint: "Dit het in die verlede gebeur" },
+    { sentence: "Voëls ___ in die winter suid.", options: ["trek","trekt","getrek"], answer: "trek", hint: "Voëls is meervoud" },
+    { sentence: "Die wetenskaplike ___ 'n belangrike eksperiment.", options: ["doen","maak","is besig"], answer: "doen", hint: "Die wetenskaplike is enkelvoud en dit gebeur nou" },
+    { sentence: "Studente moet hul opdragte betyds ___.", options: ["indien","ingedien","indiening"], answer: "indien", hint: "Wat moet studente maak?" },
+    { sentence: "Die orkes het gisteraand by die konsert pragtig ___.", options: ["gespeel","speel","besig gespeel"], answer: "gespeel", hint: "Dit het gisteraand gebeur" }
   ],
   tn: [
-    { sentence: "Mosimane o ___ sekolong.", options: ["ya", "ne a ya", "ile"], answer: "ya", hint: "Akanya ka tiro e e diragalang jaanong" },
-    { sentence: "Ntsa e nwile ___.", options: ["metsi", "metsi a mantsi", "senkgwe"], answer: "metsi", hint: "Diphoofolo di nwa eng?" },
-    { sentence: "O ne a dula ___ setlhare go batla moriti.", options: ["fa tlase", "fa godimo", "kwa morago"], answer: "fa tlase", hint: "O ya kae fa o batla moriti?" },
-    { sentence: "___ le a phatsima thata gompieno.", options: ["Letsatsi", "Ngwedi", "Naledi"], answer: "Letsatsi", hint: "Ke eng se se phatshimang motshegare?" },
-    { sentence: "Ke tlhoka go ___ tiro ya sekolo.", options: ["dira", "dirile", "dirang"], answer: "dira", hint: "Ke eng se se latelang 'tlhoka go'?" }
+    { sentence: "Moranaka o ___ sekolong.", options: ["a tsamaya","tsamaya","o tsamaye"], answer: "a tsamaya", hint: "Akanya ka se se diragalang jaanong" },
+    { sentence: "Ntsha e nofile ___.", options: ["pelo ya metsi","metse","go nosetsa"], answer: "pelo ya metsi", hint: "Diphologolo di nwa eng?" },
+    { sentence: "O bala ___ bosigo bongwe le bongwe.", options: ["bukana","dibuka","booking"], answer: "dibuka", hint: "Go feta bongwe" },
+    { sentence: "Nonyane e fofa ___ mo legodimong.", options: ["kgodimong","bokgoni","ka botlhale"], answer: "kgodimong", hint: "Nonyane e fofa jang?" },
+    { sentence: "O ne a nna ___ setlhare go fitlha seriti.", options: ["ka tlase","ka godimo","mo morago"], answer: "ka tlase", hint: "O nna kae go fitlha seriti?" },
+    { sentence: "Baithuti ___ thata mo tlhophong ya bone.", options: ["ba ithuta","ba ithuta","ba ithutang"], answer: "ba ithuta", hint: "Baithuti ba dira eng pele ga diteko?" },
+    { sentence: "O ___ tiro ya gagwe pele ga dijo.", options: ["o fetsa","fetse","a fetse"], answer: "o fetsa", hint: "Se se setse se diragetse" },
+    { sentence: "Marafoko ___ a a kgatlhang mo selemo.", options: ["a lebega","a lebe","a lebe"], answer: "a lebega", hint: "Marafoko a mangwe" },
+    { sentence: "O tla ___ tsala ya gagwe kamoso.", options: ["a etela","a etetse","a etela"], answer: "a etela", hint: "Se se tla diragala mo isagweng" },
+    { sentence: "Bana ba ne ba ___ mo lebopong la papadi.", options: ["ba bapala","bapala","ba bapile"], answer: "ba bapala", hint: "Ba ne ba dira tiro eno" },
+    { sentence: "Morutabana ___ thuto sentle.", options: ["o tlhalositse","thalasisa","o tlhalosang"], answer: "o tlhalositse", hint: "Se se diragetse mo nakong e e fetileng" },
+    { sentence: "Dinonyane ___ kwa borwa mo selemo.", options: ["di tsamaya","di tsamaya","di tsamayang"], answer: "di tsamaya", hint: "Dinonyane di feta bongwe" },
+    { sentence: "Mosayense ___ a dira teko e e botlhokwa.", options: ["o","ba","o ne"], answer: "o", hint: "Mosayense o le mongwe mme se se diragala jaanong" },
+    { sentence: "Baithuti ba tshwanetse go ___ ditshwetso tsa bone ka nako.", options: ["ba romele","ba romela","ba rometse"], answer: "ba romele", hint: "Baithuti ba tshwanetse go dira eng?" },
+    { sentence: "Sehlopha sa mmino ___ ka bokgoni mo konsareteng ya bosigo jo bo fetileng.", options: ["se dirile","se dira","se dirang"], answer: "se dirile", hint: "Se se diragetse bosigo jo bo fetileng" }
   ]
 };
 
-export const wordBuilder: Record<Language, WordBuilderItem[]> = {
+export const wordBuilder: GameContent = {
   en: [
-    { hint: "A fruit that is red or green", tiles: ["ap", "ple"], answer: "apple" },
-    { hint: "You drink this", tiles: ["wa", "ter"], answer: "water" },
+    { hint: "A fruit that is red or green", tiles: ["ap","ple"], answer: "apple" },
+    { hint: "You drink this", tiles: ["wa","ter"], answer: "water" },
+    { hint: "Animal that barks", tiles: ["dog"], answer: "dog" },
     { hint: "Opposite of slow", tiles: ["fast"], answer: "fast" },
-    { hint: "A place where you learn", tiles: ["sch", "ool"], answer: "school" },
-    { hint: "Something you read", tiles: ["bo", "ok"], answer: "book" }
+    { hint: "Place where you learn", tiles: ["school"], answer: "school" },
+    { hint: "Flying animal", tiles: ["bird"], answer: "bird" },
+    { hint: "Large gray animal with trunk", tiles: ["el","e","phant"], answer: "elephant" },
+    { hint: "Beautiful insect with colorful wings", tiles: ["but","ter","fly"], answer: "butterfly" },
+    { hint: "Yellow fruit that monkeys like", tiles: ["ba","na","na"], answer: "banana" },
+    { hint: "Large body of water", tiles: ["o","cean"], answer: "ocean" },
+    { hint: "Season when flowers bloom", tiles: ["spring"], answer: "spring" },
+    { hint: "Person who teaches students", tiles: ["teach","er"], answer: "teacher" },
+    { hint: "Vehicle that flies in the sky", tiles: ["air","plane"], answer: "airplane" },
+    { hint: "Tall plant with leaves and branches", tiles: ["tree"], answer: "tree" },
+    { hint: "Building where people live", tiles: ["house"], answer: "house" }
   ],
   zu: [
-    { hint: "Isithelo esibomvu noma esiluhlaza", tiles: ["i", "a", "pu", "la"], answer: "iapula" },
-    { hint: "Okujwayelekile ukuphuza", tiles: ["a", "ma", "nzi"], answer: "amanzi" },
-    { hint: "Okuphambene nokuhamba kancane", tiles: ["she", "sha"], answer: "shesha" },
-    { hint: "Indawo lapho ufunda khona", tiles: ["i", "si", "ko", "le"], answer: "isikole" },
-    { hint: "Into oyifundayo", tiles: ["in", "cwa", "di"], answer: "incwadi" }
+    { hint: "Isithelo esibomvu noma esiluhlaza", tiles: ["i","-a","pu","la"], answer: "i-apula" },
+    { hint: "Okujwayele ukuphuza", tiles: ["a","ma","nzi"], answer: "amanzi" },
+    { hint: "Isilwane esikhonkothayo", tiles: ["in","ja"], answer: "inja" },
+    { hint: "Okuphambene nokuhamba kancane", tiles: ["she","sha"], answer: "shesha" },
+    { hint: "Indawo lapho ufunda khona", tiles: ["i","si","ko","le"], answer: "isikole" },
+    { hint: "Isilwane esindizayo", tiles: ["i","nyo","ni"], answer: "inyoni" },
+    { hint: "Isilwane esikhulu esimpunga ngekhala", tiles: ["in","dlo","vu"], answer: "indlovu" },
+    { hint: "Isinambuzane esihle esinezimpiko ezimibalabala", tiles: ["i","ve","me","ni"], answer: "ivemeni" },
+    { hint: "Isithelo esiphuzi ezikonkongeni zithanda", tiles: ["u","bha","na","na"], answer: "ubhanana" },
+    { hint: "Umzimba omkhulu wamanzi", tiles: ["u","lwan","dle"], answer: "ulwandle" },
+    { hint: "Isikhathi lapho amalungu eqhakazela", tiles: ["in","twe","sa","ne"], answer: "intwesane" },
+    { hint: "Umuntu ofundisa abafundi", tiles: ["u","thi","sha"], answer: "uthisha" },
+    { hint: "Isithuthi esindiza esibhakabhakeni", tiles: ["in","diza"], answer: "indiza" },
+    { hint: "Isitshalo eside esinamaqabunga nezingatsha", tiles: ["i","si","hla","hla"], answer: "isihlahla" },
+    { hint: "Isakhiwo lapho abantu abahlala khona", tiles: ["in","dlu"], answer: "indlu" }
   ],
   af: [
-    { hint: "'n Vrug wat rooi of groen is", tiles: ["ap", "pel"], answer: "appel" },
-    { hint: "Jy drink dit", tiles: ["wa", "ter"], answer: "water" },
-    { hint: "Teenoorgestelde van stadig", tiles: ["vin", "nig"], answer: "vinnig" },
-    { hint: "'n Plek waar jy leer", tiles: ["sk", "ool"], answer: "skool" },
-    { hint: "Iets wat jy lees", tiles: ["bo", "ek"], answer: "boek" }
+    { hint: "'n Vrug wat rooi of groen is", tiles: ["ap","pel"], answer: "appel" },
+    { hint: "Jy drink dit", tiles: ["wa","ter"], answer: "water" },
+    { hint: "Dier wat blaf", tiles: ["hond"], answer: "hond" },
+    { hint: "Teenoorgestelde van stadig", tiles: ["vin","nig"], answer: "vinnig" },
+    { hint: "Plek waar jy leer", tiles: ["skool"], answer: "skool" },
+    { hint: "Vliegende dier", tiles: ["vo","ël"], answer: "voël" },
+    { hint: "Groot grys dier met 'n slurp", tiles: ["o","li","fant"], answer: "olifant" },
+    { hint: "Mooi insek met kleurvolle vlerke", tiles: ["ska","pu","ry"], answer: "skapury" },
+    { hint: "Geel vrug wat ape hou van", tiles: ["pi","sang"], answer: "pisang" },
+    { hint: "Groot liggaam water", tiles: ["o","se","aan"], answer: "oseaan" },
+    { hint: "Seisoen wanneer blomme bloei", tiles: ["len","te"], answer: "lente" },
+    { hint: "Persoon wat studente onderrig", tiles: ["on","der","wy","ser"], answer: "onderwyser" },
+    { hint: "Voertuig wat in die lug vlieg", tiles: ["vlieg","tuig"], answer: "vliegtuig" },
+    { hint: "Hoë plant met blare en takke", tiles: ["boom"], answer: "boom" },
+    { hint: "Gebou waar mense woon", tiles: ["huis"], answer: "huis" }
   ],
   tn: [
-    { hint: "Maungo a a khibidu kgotsa a a talasetso", tiles: ["a", "pe", "le"], answer: "apele" },
-    { hint: "Se o se nwang", tiles: ["me", "tsi"], answer: "metsi" },
-    { hint: "Se se farologaneng le go nna bonya", tiles: ["bo", "na", "ko"], answer: "bonako" },
-    { hint: "Lefelo le o ithutang gone", tiles: ["se", "ko", "lo"], answer: "sekolo" },
-    { hint: "Selo se o se buisang", tiles: ["bu", "ka"], answer: "buka" }
+    { hint: "Leungo le le khubelu kgotsa le le tala", tiles: ["a","pole"], answer: "apole" },
+    { hint: "Se o se nowang", tiles: ["me","tsi"], answer: "metsi" },
+    { hint: "Phologolo e e goletsang", tiles: ["ntša"], answer: "ntša" },
+    { hint: "E e supang kgatlhanong le butle", tiles: ["lebelo"], answer: "lebelo" },
+    { hint: "Lefelo leo o ithutang mo go lone", tiles: ["sekolo"], answer: "sekolo" },
+    { hint: "Phologolo e e fofang", tiles: ["non", "yane"], answer: "nonyane" },
+    { hint: "Phologolo e kgolo e e botala jwa bosehla le nko e telele", tiles: ["t","lou"], answer: "tlou" },
+    { hint: "Senwelo se se ntle se se nang mapheo a mebala-bala", tiles: ["ser","uru","bele"], answer: "serurubele" },
+    { hint: "Leungo le le sootho le le ratwang ke dikgoa", tiles: ["pa","na","na"], answer: "panana" },
+    { hint: "Mmela o mogolo wa metsi", tiles: ["lewa","tle"], answer: "lewatle" },
+    { hint: "Nako ya selemo fa dimmaraka di thunya", tiles: ["mots", "wedi"], answer: "motswedi" },
+    { hint: "Motho yo o rutang baithuti", tiles: ["moru","tabana"], answer: "morutabana" },
+    { hint: "Se se fofang mo legodimong", tiles: ["sefo","fane"], answer: "sefofane" },
+    { hint: "Semela se se telele se se nang makhasi le makala", tiles: ["setlhare"], answer: "setlhare" },
+    { hint: "Ntlo eo batho ba nnang mo go yone", tiles: ["ntlo"], answer: "ntlo" }
+  ]
+};
+
+export const mockStudents = [
+  { name: 'Sipho', lastActivity: '2 hours ago', levelsCompleted: 8, stars: 22, struggles: 'Prepositions' },
+  { name: 'Aisha', lastActivity: '1 day ago', levelsCompleted: 12, stars: 34, struggles: 'Word building' },
+  { name: 'Liam', lastActivity: '30 mins ago', levelsCompleted: 6, stars: 15, struggles: 'Reading fluency' }
+];
+
+export const mockMessages = {
+  en: [
+    "Sipho finished Level 1 – Word Builder today. 🎉",
+    "Aisha struggled with prepositions - consider extra practice.",
+    "Great progress! Liam completed 3 levels this week."
+  ],
+  zu: [
+    "USipho uqede iZinga 1 – Ukwakha Amagama namuhla. 🎉", 
+    "U-Aisha wayenenkinga ngezanduleli - cabanga ngokuzivivinya okwengeziwe.",
+    "Inqubekelaphambili enhle! ULiam uqede amazinga ama-3 kulesonto."
+  ],
+  af: [
+    "Sipho het Vlak 1 – Woord Bouer vandag voltooi. 🎉",
+    "Aisha het probleme gehad met voorsetsels - oorweeg ekstra oefening.",
+    "Uitstekende vordering! Liam het 3 vlakke hierdie week voltooi."
+  ],
+  tn: [
+    "Sipho o feditse Level 1 – Moagi wa Mafoko gompieno. 🎉",
+    "Aisha o ne a kgaratlha ka matlhalosi - akanyetsa go ikatisa go go oketsegileng.",
+    "Kgatelopele e kgolo! Liam o weditse maemo a le 3 mo bekeng eno."
   ]
 };

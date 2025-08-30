@@ -15,34 +15,19 @@ export interface LevelProgress {
   completedAt?: number;
 }
 
-export interface GameProgress {
-  1: LevelProgress;
-  2: LevelProgress;
-  3: LevelProgress;
-}
-
-export interface ProgressState {
-  wordHunt: GameProgress;
-  readAloud: GameProgress;
-  fillBlank: GameProgress;
-  wordBuilder: GameProgress;
-}
+export type GameProgress = Record<LevelKey, LevelProgress>;
+export type ProgressState = Record<GameKey, GameProgress>;
 
 export interface User {
   name: string;
   avatarColor: string;
 }
 
-export interface GameContent {
-  title: string;
-  description: string;
-}
-
 export interface WordHuntItem {
   passage: string;
   prompt: string;
   answers: string[];
-  distractors: string[];
+  distractors?: string[];
 }
 
 export interface ReadAloudItem {
@@ -61,4 +46,11 @@ export interface WordBuilderItem {
   hint: string;
   tiles: string[];
   answer: string;
+}
+
+export interface GameContent {
+  en: any[];
+  zu: any[];
+  af: any[];
+  tn: any[];
 }

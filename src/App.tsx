@@ -1,56 +1,75 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Header } from './components/ui/Header';
-import { Toast } from './components/ui/Toast';
-import { Home } from './pages/Home';
-import { WordHunt } from './pages/games/WordHunt';
-import { ReadAloud } from './pages/games/ReadAloud';
-import { FillBlank } from './pages/games/FillBlank';
-import { WordBuilder } from './pages/games/WordBuilder';
-import { Dashboard } from './pages/Dashboard';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import ToastContainer from './components/ToastContainer';
+import Home from './pages/Home';
+import WordHuntGame from './pages/WordHuntGame';
+import ReadAloudGame from './pages/ReadAloudGame';
+import FillBlankGame from './pages/FillBlankGame';
+import WordBuilderGame from './pages/WordBuilderGame';
+import Dashboard from './pages/Dashboard';
 import { useLanguage } from './hooks/useLanguage';
 import { useProgress } from './hooks/useProgress';
+import { useToast } from './hooks/useToast';
+import './App.css';
 
 function App() {
   const { language, setLanguage } = useLanguage();
   const { resetProgress } = useProgress();
-  const [toast, setToast] = useState<string | null>(null);
+  const { toasts, showToast, removeToast } = useToast();
 
   const handleResetProgress = () => {
     resetProgress();
-    setToast('Progress reset successfully');
+    showToast('Progress reset successfully', 'success');
   };
 
   return (
-    <BrowserRouter>
+    <Router>
       <div className="min-h-screen bg-gray-50">
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Header
-                language={language}
-                onLanguageChange={setLanguage}
-                onResetProgress={handleResetProgress}
-                onNavigateDashboard={() => window.location.href = '/dashboard'}
-              />
-              <Home />
-            </>
-          } />
-          <Route path="/game/word-hunt" element={<WordHunt />} />
-          <Route path="/game/read-aloud" element={<ReadAloud />} />
-          <Route path="/game/fill-blank" element={<FillBlank />} />
-          <Route path="/game/word-builder" element={<WordBuilder />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
+        <Header
+          language={language}
+          onLanguageChange={setLanguage}
+          onResetProgress={handleResetProgress}
+        />
+        
+        <main>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  language={language}
+                  onLanguageChange={setLanguage}
+                  onResetProgress={handleResetProgress}
+                />
+              }
+            />
+            <Route
+              path="/game/word-hunt"
+              element={<WordHuntGame language={language} showToast={showToast} />}
+            />
+            <Route
+              path="/game/read-aloud"
+              element={<ReadAloudGame language={language} showToast={showToast} />}
+            />
+            <Route
+              path="/game/fill-blank"
+              element={<FillBlankGame language={language} showToast={showToast} />}
+            />
+            <Route
+              path="/game/word-builder"
+              element={<WordBuilderGame language={language} showToast={showToast} />}
+            />
+            <Route
+              path="/dashboard"
+              element={<Dashboard language={language} showToast={showToast} />}
+            />
+          </Routes>
+        </main>
 
-        {toast && (
-          <Toast
-            message={toast}
-            onClose={() => setToast(null)}
-          />
-        )}
+        <ToastContainer toasts={toasts} removeToast={removeToast} />
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 

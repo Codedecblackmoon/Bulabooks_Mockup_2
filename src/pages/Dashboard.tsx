@@ -1,202 +1,270 @@
 import React, { useState } from 'react';
-import { ArrowLeft, BarChart3, Users, MessageCircle, Star, Clock, TrendingUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { ProgressRing } from '../components/ui/ProgressRing';
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { Users, MessageSquare, TrendingUp, Clock, Target, Send } from 'lucide-react';
 import { useProgress } from '../hooks/useProgress';
-import { useLanguage } from '../hooks/useLanguage';
-import { uiStrings } from '../content';
+import { Language, GameKey } from '../types';
+import { t } from '../utils/i18n';
+import { mockStudents, mockMessages } from '../content';
 
-type Tab = 'overview' | 'students' | 'messages';
+interface DashboardProps {
+  language: Language;
+  showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
+}
 
-export const Dashboard: React.FC = () => {
-  const navigate = useNavigate();
-  const { language } = useLanguage();
+const Dashboard: React.FC<DashboardProps> = ({ language, showToast }) => {
+  const [activeTab, setActiveTab] = useState<'overview' | 'students' | 'messages'>('overview');
+  const [selectedStudent, setSelectedStudent] = useState<string | null>(null);
   const { getGameProgress } = useProgress();
-  const [activeTab, setActiveTab] = useState<Tab>('overview');
 
-  const strings = uiStrings[language] || uiStrings.en;
-
-  // Mock student data
-  const students = [
-    {
-      name: 'Sipho',
-      lastActivity: '2 hours ago',
-      levelsCompleted: 8,
-      stars: 22,
-      struggles: 'Prepositions'
-    },
-    {
-      name: 'Aisha', 
-      lastActivity: '1 day ago',
-      levelsCompleted: 12,
-      stars: 34,
-      struggles: 'Reading fluency'
-    },
-    {
-      name: 'Liam',
-      lastActivity: '3 hours ago', 
-      levelsCompleted: 6,
-      stars: 15,
-      struggles: 'Vocabulary'
-    }
-  ];
-
-  const messages = [
-    'Sipho finished Level 1 – Word Builder today. 🎉',
-    'Aisha needs help with reading fluency exercises.',
-    'Liam completed 3 levels this week! Great progress! ⭐'
-  ];
-
-  const gameProgress = {
-    wordHunt: getGameProgress('wordHunt'),
-    readAloud: getGameProgress('readAloud'),
-    fillBlank: getGameProgress('fillBlank'),
-    wordBuilder: getGameProgress('wordBuilder')
+  const gameKeys: GameKey[] = ['wordHunt', 'readAloud', 'fillBlank', 'wordBuilder'];
+  const gameNames = {
+    wordHunt: 'Word Hunt',
+    readAloud: 'Read-Aloud',
+    fillBlank: 'Fill-in-the-Blank',
+    wordBuilder: 'Word Builder'
   };
 
-  const OverviewTab = () => (
+  const overviewData = gameKeys.map(gameKey => {
+    const progress = getGameProgress(gameKey);
+    return {
+      name: gameNames[gameKey],
+      percentage: Math.round(progress.percentage),
+      stars: progress.totalStars,
+      maxStars: progress.maxStars
+    };
+  });
+
+  const colors = ['#FF7A00', '#3B82F6', '#22C55E', '#EF4444'];
+
+  const handleSendMessage = (messageIndex: number) => {
+    showToast(t('smsQueued', language), 'success');
+  };
+
+  const renderOverview = () => (
     <div className="space-y-6">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-xl p-6 shadow-md">
-          <div className="flex items-center gap-3 mb-2">
-            <Clock className="w-5 h-5 text-blue-600" />
-            <span className="text-sm font-medium text-gray-600">Time This Week</span>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-orange-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Overall Progress</p>
+              <p className="text-2xl font-bold text-gray-800">73%</p>
+            </div>
           </div>
-          <p className="text-2xl font-bold text-gray-900">2h 34m</p>
         </div>
-        
-        <div className="bg-white rounded-xl p-6 shadow-md">
-          <div className="flex items-center gap-3 mb-2">
-            <Star className="w-5 h-5 text-yellow-500" />
-            <span className="text-sm font-medium text-gray-600">Total Stars</span>
+
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <Clock className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">{t('timeSpentThisWeek', language)}</p>
+              <p className="text-2xl font-bold text-gray-800">4.2h</p>
+            </div>
           </div>
-          <p className="text-2xl font-bold text-gray-900">
-            {Object.values(gameProgress).reduce((sum, game) => sum + game.totalStars, 0)}
-          </p>
         </div>
-        
-        <div className="bg-white rounded-xl p-6 shadow-md">
-          <div className="flex items-center gap-3 mb-2">
-            <TrendingUp className="w-5 h-5 text-green-600" />
-            <span className="text-sm font-medium text-gray-600">Completion Rate</span>
+
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+              <Target className="w-5 h-5 text-green-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Levels Completed</p>
+              <p className="text-2xl font-bold text-gray-800">26</p>
+            </div>
           </div>
-          <p className="text-2xl font-bold text-gray-900">
-            {Math.round(Object.values(gameProgress).reduce((sum, game) => sum + game.percentage, 0) / 4)}%
-          </p>
+        </div>
+
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+              <Users className="w-5 h-5 text-purple-600" />
+            </div>
+            <div>
+              <p className="text-sm text-gray-600">Active Students</p>
+              <p className="text-2xl font-bold text-gray-800">3</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Game Progress */}
-      <div className="bg-white rounded-xl p-6 shadow-md">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Game Progress</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {Object.entries(strings.games).map(([gameKey, gameInfo]) => {
-            const progress = gameProgress[gameKey as keyof typeof gameProgress];
-            return (
-              <div key={gameKey} className="flex items-center gap-4">
-                <ProgressRing percent={progress.percentage} size={60}>
-                  <span className="text-xs font-medium">{progress.percentage}%</span>
-                </ProgressRing>
-                <div className="flex-1">
-                  <h4 className="font-medium text-gray-900">{gameInfo.title}</h4>
-                  <p className="text-sm text-gray-600">
-                    {progress.completedItems}/{progress.totalItems} completed
-                  </p>
-                  <p className="text-sm text-yellow-600">
-                    ⭐ {progress.totalStars} stars
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Progress Chart */}
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Game Progress</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={overviewData}>
+                <XAxis 
+                  dataKey="name" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis />
+                <Bar 
+                  dataKey="percentage" 
+                  fill="#FF7A00"
+                  radius={[4, 4, 0, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
-      </div>
 
-      {/* Focus Areas */}
-      <div className="bg-white rounded-xl p-6 shadow-md">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Focus Areas</h3>
-        <div className="space-y-3">
-          <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
-            <span className="text-red-700">Prepositions (in, on, under)</span>
-            <span className="text-sm text-red-600">Needs attention</span>
-          </div>
-          <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
-            <span className="text-yellow-700">Reading fluency</span>
-            <span className="text-sm text-yellow-600">Improving</span>
-          </div>
-          <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-            <span className="text-green-700">Vocabulary building</span>
-            <span className="text-sm text-green-600">Strong</span>
+        {/* Focus Areas */}
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('focusAreas', language)}</h3>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-200">
+              <span className="font-medium text-red-800">Prepositions</span>
+              <span className="text-sm text-red-600">2 students struggling</span>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+              <span className="font-medium text-yellow-800">Word building</span>
+              <span className="text-sm text-yellow-600">1 student struggling</span>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+              <span className="font-medium text-green-800">Reading fluency</span>
+              <span className="text-sm text-green-600">All students progressing</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 
-  const StudentsTab = () => (
-    <div className="bg-white rounded-xl shadow-md">
-      <div className="p-6 border-b border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900">Student Progress</h3>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Last Activity</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Levels</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stars</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Struggles</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {students.map((student, index) => (
-              <tr key={index} className="hover:bg-gray-50">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                      <span className="text-sm font-medium text-orange-600">
-                        {student.name.charAt(0)}
-                      </span>
-                    </div>
-                    <span className="font-medium text-gray-900">{student.name}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-600">{student.lastActivity}</td>
-                <td className="px-6 py-4 text-sm text-gray-900">{student.levelsCompleted}</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center gap-1 text-sm text-yellow-600">
-                    <Star className="w-4 h-4" />
-                    {student.stars}
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-sm text-red-600">{student.struggles}</td>
+  const renderStudents = () => (
+    <div className="space-y-6">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-800">Student Progress</h3>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Student
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('lastActivity', language)}
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('levelsCompleted', language)}
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('stars', language)}
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {t('struggles', language)}
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {mockStudents.map((student, index) => (
+                <tr 
+                  key={index}
+                  className="hover:bg-gray-50 cursor-pointer"
+                  onClick={() => setSelectedStudent(selectedStudent === student.name ? null : student.name)}
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                        <span className="text-orange-600 font-medium">
+                          {student.name.charAt(0)}
+                        </span>
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-sm font-medium text-gray-800">{student.name}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    {student.lastActivity}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">
+                    {student.levelsCompleted}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-yellow-600 font-medium">
+                    ⭐ {student.stars}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-red-600">
+                    {student.struggles}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+
+      {/* Student Detail Drawer */}
+      {selectedStudent && (
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h4 className="text-lg font-semibold text-gray-800 mb-4">
+            {selectedStudent} - Detailed Progress
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {gameKeys.map((gameKey, index) => {
+              const progress = getGameProgress(gameKey);
+              return (
+                <div key={gameKey} className="bg-gray-50 rounded-lg p-4">
+                  <h5 className="font-medium text-gray-700 mb-2">{gameNames[gameKey]}</h5>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">Progress:</span>
+                      <span className="font-medium">{Math.round(progress.percentage)}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="h-2 rounded-full transition-all duration-300"
+                        style={{ 
+                          width: `${progress.percentage}%`,
+                          backgroundColor: colors[index]
+                        }}
+                      />
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">Stars:</span>
+                      <span className="font-medium">{progress.totalStars}/{progress.maxStars}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 
-  const MessagesTab = () => (
-    <div className="space-y-4">
-      <div className="bg-white rounded-xl p-6 shadow-md">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Parent SMS Updates</h3>
+  const renderMessages = () => (
+    <div className="space-y-6">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">SMS Preview</h3>
         <div className="space-y-4">
-          {messages.map((message, index) => (
-            <div key={index} className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
-              <MessageCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+          {mockMessages[language].map((message, index) => (
+            <div key={index} className="bg-gray-50 rounded-lg p-4 flex items-start justify-between">
               <div className="flex-1">
                 <p className="text-gray-800">{message}</p>
-                <div className="flex items-center gap-2 mt-2">
-                  <button className="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg transition-colors">
-                    Send (Mock)
-                  </button>
-                  <span className="text-xs text-gray-500">Demo mode</span>
-                </div>
+                <p className="text-sm text-gray-500 mt-1">Ready to send</p>
               </div>
+              <button
+                onClick={() => handleSendMessage(index)}
+                className="ml-4 flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              >
+                <Send className="w-4 h-4" />
+                <span>{t('sendMock', language)}</span>
+              </button>
             </div>
           ))}
         </div>
@@ -204,54 +272,52 @@ export const Dashboard: React.FC = () => {
     </div>
   );
 
-  const tabs = [
-    { id: 'overview', label: 'Overview', icon: BarChart3 },
-    { id: 'students', label: 'Students', icon: Users },
-    { id: 'messages', label: 'Messages', icon: MessageCircle }
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate('/')}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5 text-gray-600" />
-            </button>
-            <h1 className="text-xl font-bold text-gray-900">Teacher Dashboard</h1>
-          </div>
-        </div>
-      </div>
-
-      {/* Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            {t('dashboard', language)}
+          </h1>
+          <p className="text-gray-600">
+            Monitor student progress and send updates to parents
+          </p>
+        </div>
+
         {/* Tabs */}
-        <div className="flex space-x-1 bg-gray-100 rounded-xl p-1 mb-8 max-w-md">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as Tab)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex-1 justify-center ${
-                activeTab === tab.id
-                  ? 'bg-white text-orange-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              <tab.icon className="w-4 h-4" />
-              {tab.label}
-            </button>
-          ))}
+        <div className="mb-8">
+          <div className="border-b border-gray-200">
+            <nav className="flex space-x-8">
+              {(['overview', 'students', 'messages'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                    activeTab === tab
+                      ? 'border-orange-500 text-orange-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2">
+                    {tab === 'overview' && <TrendingUp className="w-4 h-4" />}
+                    {tab === 'students' && <Users className="w-4 h-4" />}
+                    {tab === 'messages' && <MessageSquare className="w-4 h-4" />}
+                    <span className="capitalize">{t(tab, language)}</span>
+                  </div>
+                </button>
+              ))}
+            </nav>
+          </div>
         </div>
 
         {/* Tab Content */}
-        {activeTab === 'overview' && <OverviewTab />}
-        {activeTab === 'students' && <StudentsTab />}
-        {activeTab === 'messages' && <MessagesTab />}
+        {activeTab === 'overview' && renderOverview()}
+        {activeTab === 'students' && renderStudents()}
+        {activeTab === 'messages' && renderMessages()}
       </div>
     </div>
   );
 };
+
+export default Dashboard;
