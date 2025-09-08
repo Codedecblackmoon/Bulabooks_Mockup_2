@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { BookOpen, Mic, PenTool, Puzzle } from 'lucide-react';
 import ProgressRing from './ProgressRing';
 import LevelProgressBar from './LevelProgressBar';
-import { GameKey } from '../types';
+import type { GameKey } from '../types';
 import { t } from '../utils/i18n';
-import { Language } from '../types';
+import type { Language } from '../types';
 
 interface GameCardProps {
   gameKey: GameKey;

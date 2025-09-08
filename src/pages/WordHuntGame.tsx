@@ -4,7 +4,7 @@ import { CheckCircle, XCircle } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
 import { wordHunt } from '../content';
-import { Language, LevelKey, WordHuntItem } from '../types';
+import type { Language, LevelKey, WordHuntItem } from '../types';
 import { t } from '../utils/i18n';
 
 interface WordHuntGameProps {

@@ -4,7 +4,7 @@ import { Play, Mic, Volume2, Eye, Star } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
 import { readAloud } from '../content';
-import { Language, LevelKey, ReadAloudItem } from '../types';
+import type { Language, LevelKey, ReadAloudItem } from '../types';
 import { t } from '../utils/i18n';
 
 interface ReadAloudGameProps {

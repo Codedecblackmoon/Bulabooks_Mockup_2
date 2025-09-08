@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import ToastContainer from './components/ToastContainer';
 import Home from './pages/Home';
@@ -8,6 +8,7 @@ import ReadAloudGame from './pages/ReadAloudGame';
 import FillBlankGame from './pages/FillBlankGame';
 import WordBuilderGame from './pages/WordBuilderGame';
 import Dashboard from './pages/Dashboard';
+import Login from './pages/Login'
 import { useLanguage } from './hooks/useLanguage';
 import { useProgress } from './hooks/useProgress';
 import { useToast } from './hooks/useToast';
@@ -34,8 +35,12 @@ function App() {
         
         <main>
           <Routes>
+            <Route path="/" element={<Navigate to="/login" replace />} />
+
+            <Route path="/login" element={<Login />} />
+
             <Route
-              path="/"
+              path="/home"
               element={
                 <Home
                   language={language}

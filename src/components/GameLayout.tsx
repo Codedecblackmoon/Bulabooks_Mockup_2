@@ -4,7 +4,7 @@ import { ArrowLeft, HelpCircle, SkipForward, Star } from 'lucide-react';
 import LevelProgressBar from './LevelProgressBar';
 import LevelSummaryModal from './LevelSummaryModal';
 import { useProgress } from '../hooks/useProgress';
-import { GameKey, LevelKey, Language } from '../types';
+import type { GameKey, LevelKey, Language } from '../types';
 import { t } from '../utils/i18n';
 
 interface GameLayoutProps {

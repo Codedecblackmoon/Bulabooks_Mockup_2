@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, User, BarChart3, RotateCcw, Info, Home } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
-import { Language } from '../types';
+import type { Language } from '../types';
 import { t } from '../utils/i18n';
 
 interface HeaderProps {

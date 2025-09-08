@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ProgressState, GameKey, LevelKey } from '../types';
+import type { ProgressState, GameKey, LevelKey } from '../types';
 
 const STORAGE_KEY = 'bulabooks.progress';
 
@@ -93,9 +93,12 @@ export function useProgress() {
 
   const getCurrentLevel = (game: GameKey): LevelKey => {
     // Find the first uncompleted level, default to 1
-    for (let level: LevelKey = 1; level <= 3; level++) {
-      if (!progress[game][level].completed) {
-        return level;
+    // for (let level: = 1 as LevelKey; level <= 3; level++) {
+    //   if (!progress[game][level as LeveKey].completed) {
+    //     return level as LeveKey;
+    for (let level = 1 as LevelKey; level <= 3; level++) {
+      if (!progress[game][level as LevelKey].completed) {
+        return level as LevelKey;
       }
     }
     return 3; // All levels completed, return last level

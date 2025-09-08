@@ -3,7 +3,7 @@ import { BookOpen, Users, RotateCcw } from 'lucide-react';
 import GameCard from '../components/GameCard';
 import LanguageSwitcher from '../components/LanguageSwitcher';
 import { useProgress } from '../hooks/useProgress';
-import { GameKey, Language } from '../types';
+import type { GameKey, Language } from '../types';
 import { t } from '../utils/i18n';
 import { useNavigate } from 'react-router-dom';
 

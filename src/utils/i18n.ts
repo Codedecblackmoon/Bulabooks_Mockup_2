@@ -1,4 +1,4 @@
-import { Language } from '../types';
+import type { Language } from '../types';
 import { uiStrings } from '../content';
 
 export function t(key: string, language: Language): string {

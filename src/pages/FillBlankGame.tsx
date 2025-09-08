@@ -4,7 +4,7 @@ import { CheckCircle, XCircle, Lightbulb } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
 import { fillBlank } from '../content';
-import { Language, LevelKey, FillBlankItem } from '../types';
+import type { Language, LevelKey, FillBlankItem } from '../types';
 import { t } from '../utils/i18n';
 
 interface FillBlankGameProps {
