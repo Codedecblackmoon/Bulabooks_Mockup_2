@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Users, MessageSquare, TrendingUp, Clock, Target, Send } from 'lucide-react';
 import { useProgress } from '../hooks/useProgress';
-import type { Language, GameKey } from '../types';
+import { Language, GameKey } from '../types';
 import { t } from '../utils/i18n';
 import { mockStudents, mockMessages } from '../content';
 

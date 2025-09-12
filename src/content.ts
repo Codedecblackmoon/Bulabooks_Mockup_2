@@ -1,4 +1,4 @@
-import type { GameContent } from './types';
+import { GameContent } from './types';
 
 export const uiStrings = {
   en: {

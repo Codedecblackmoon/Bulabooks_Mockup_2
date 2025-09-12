@@ -1,7 +1,7 @@
 import React from 'react';
 import { Star, Clock, ArrowRight, RotateCcw } from 'lucide-react';
 import { t } from '../utils/i18n';
-import type { Language } from '../types';
+import { Language } from '../types';
 
 interface LevelSummaryModalProps {
   isOpen: boolean;

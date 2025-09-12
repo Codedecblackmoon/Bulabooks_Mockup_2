@@ -4,7 +4,7 @@ import { CheckCircle, XCircle, Lightbulb, RefreshCw } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
 import { wordBuilder } from '../content';
-import type { Language, LevelKey, WordBuilderItem } from '../types';
+import { Language, LevelKey, WordBuilderItem } from '../types';
 import { t } from '../utils/i18n';
 
 interface WordBuilderGameProps {

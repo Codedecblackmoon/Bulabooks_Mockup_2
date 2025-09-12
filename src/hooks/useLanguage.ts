@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { Language } from '../types';
+import { Language } from '../types';
 
 const STORAGE_KEY = 'bulabooks.lang';
 

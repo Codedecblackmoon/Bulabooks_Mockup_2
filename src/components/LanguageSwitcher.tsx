@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Globe } from 'lucide-react';
-import type { Language } from '../types';
+import { Language } from '../types';
 
 interface LanguageSwitcherProps {
   language: Language;
