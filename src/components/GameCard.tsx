@@ -41,6 +41,7 @@ const GameCard: React.FC<GameCardProps> = ({
 
   return (
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 cursor-pointer border border-gray-100"
+         data-tutorial="game-cards"
          onClick={() => navigate(`/game/${gameKey.replace(/([A-Z])/g, '-$1').toLowerCase()}`)}>
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
@@ -52,7 +53,7 @@ const GameCard: React.FC<GameCardProps> = ({
             <p className="text-sm text-gray-600">{description}</p>
           </div>
         </div>
-        <ProgressRing percent={progress.percentage} size={56} strokeWidth={4} />
+        <ProgressRing percent={progress.percentage} size={56} strokeWidth={4} data-tutorial="progress-ring" />
       </div>
 
       <div className="space-y-3">

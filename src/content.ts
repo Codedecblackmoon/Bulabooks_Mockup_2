@@ -41,6 +41,8 @@ export const uiStrings = {
     record: 'Record',
     syllableHelper: 'Syllable Helper',
     simulate: 'Simulate',
+    tutorial: 'Tutorial',
+    startTutorial: 'Start Tutorial',
     gameDescriptions: {
       wordHunt: 'Find words by meaning in passages',
       readAloud: 'Practice reading with instant feedback',
@@ -89,6 +91,8 @@ export const uiStrings = {
     record: 'Rekhoda',
     syllableHelper: 'Umsizi Wezihlabu',
     simulate: 'Lingisa',
+    tutorial: 'Isifundo',
+    startTutorial: 'Qala Isifundo',
     gameDescriptions: {
       wordHunt: 'Thola amagama ngencazelo ezindimeni',
       readAloud: 'Zivivinye ukufunda ngempendulo esheshayo',
@@ -137,6 +141,8 @@ export const uiStrings = {
     record: 'Neem op',
     syllableHelper: 'Lettergreep Helper',
     simulate: 'Simuleer',
+    tutorial: 'Tutoriaal',
+    startTutorial: 'Begin Tutoriaal',
     gameDescriptions: {
       wordHunt: 'Vind woorde volgens betekenis in teks',
       readAloud: 'Oefen lees met onmiddellike terugvoer',
@@ -185,6 +191,8 @@ export const uiStrings = {
     record: 'Gatisa',
     syllableHelper: 'Mothusi wa dinoko',
     simulate: 'Etsisa',
+    tutorial: 'Thuto',
+    startTutorial: 'Simolola Thuto',
     gameDescriptions: {
       wordHunt: 'Batla mafoko ka bokao mo ditemaneng',
       readAloud: 'Ikatisetse go buisa ka pegelo ya ka bonako',

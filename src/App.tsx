@@ -12,6 +12,7 @@ import { useLanguage } from './hooks/useLanguage';
 import { useGrade } from './hooks/useGrade';
 import { useProgress } from './hooks/useProgress';
 import { useToast } from './hooks/useToast';
+import { useTutorial } from './hooks/useTutorial';
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   const { grade, setGrade } = useGrade();
   const { resetProgress } = useProgress();
   const { toasts, showToast, removeToast } = useToast();
+  const { startTutorial } = useTutorial();
 
   const handleResetProgress = () => {
     resetProgress();
@@ -34,6 +36,7 @@ function App() {
           grade={grade}
           onGradeChange={setGrade}
           onResetProgress={handleResetProgress}
+          onStartTutorial={startTutorial}
         />
         
         <main>
@@ -47,6 +50,7 @@ function App() {
                   grade={grade}
                   onGradeChange={setGrade}
                   onResetProgress={handleResetProgress}
+                  onStartTutorial={startTutorial}
                 />
               }
             />

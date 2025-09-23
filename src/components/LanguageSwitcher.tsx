@@ -18,7 +18,8 @@ const languages = {
 const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   language,
   onLanguageChange,
-  compact = false
+  compact = false,
+  ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -43,6 +44,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
             ? 'p-2 rounded-lg hover:bg-gray-100' 
             : 'bg-white border border-gray-300 rounded-xl px-4 py-3 hover:bg-gray-50'
         } transition-colors duration-200`}
+        {...props}
       >
         {compact ? (
           <Globe className="w-5 h-5 text-gray-600" />

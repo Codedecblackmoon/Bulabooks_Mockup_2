@@ -11,14 +11,15 @@ const ProgressRing: React.FC<ProgressRingProps> = ({
   percent, 
   size = 64, 
   strokeWidth = 6,
-  className = "" 
+  className = "",
+  ...props
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percent / 100) * circumference;
 
   return (
-    <div className={`relative ${className}`} style={{ width: size, height: size }}>
+    <div className={`relative ${className}`} style={{ width: size, height: size }} {...props}>
       <svg
         className="transform -rotate-90"
         width={size}

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, User, BarChart3, RotateCcw, Info, Home } from 'lucide-react';
+import { ArrowLeft, User, BarChart3, RotateCcw, Info, Home, HelpCircle } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
 import GradeSelector from './GradeSelector';
 import { Language, Grade } from '../types';
@@ -12,6 +12,7 @@ interface HeaderProps {
   grade: Grade;
   onGradeChange: (grade: Grade) => void;
   onResetProgress: () => void;
+  onStartTutorial?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ 
@@ -19,7 +20,8 @@ const Header: React.FC<HeaderProps> = ({
   onLanguageChange, 
   grade, 
   onGradeChange, 
-  onResetProgress 
+  onResetProgress,
+  onStartTutorial
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -66,12 +68,14 @@ const Header: React.FC<HeaderProps> = ({
           grade={grade}
           onGradeChange={onGradeChange}
           compact
+          data-tutorial="grade-selector"
         />
         
         <LanguageSwitcher
           language={language}
           onLanguageChange={onLanguageChange}
           compact
+          data-tutorial="language-selector"
         />
 
         <div className="relative" ref={menuRef}>
@@ -124,6 +128,19 @@ const Header: React.FC<HeaderProps> = ({
                 <Info className="w-4 h-4 text-gray-600" />
                 <span className="text-gray-800">{t('about', language)}</span>
               </button>
+              
+              {onStartTutorial && (
+                <button
+                  onClick={() => {
+                    onStartTutorial();
+                    setShowMenu(false);
+                  }}
+                  className="w-full flex items-center space-x-3 px-4 py-3 text-left hover:bg-gray-50 last:rounded-b-xl transition-colors"
+                >
+                  <HelpCircle className="w-4 h-4 text-gray-600" />
+                  <span className="text-gray-800">Tutorial</span>
+                </button>
+              )}
             </div>
           )}
         </div>

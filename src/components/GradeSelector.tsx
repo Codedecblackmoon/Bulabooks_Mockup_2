@@ -13,7 +13,8 @@ const grades: Grade[] = [3, 4, 5, 6, 7];
 const GradeSelector: React.FC<GradeSelectorProps> = ({
   grade,
   onGradeChange,
-  compact = false
+  compact = false,
+  ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -38,6 +39,7 @@ const GradeSelector: React.FC<GradeSelectorProps> = ({
             ? 'p-2 rounded-lg hover:bg-gray-100' 
             : 'bg-white border border-gray-300 rounded-xl px-4 py-3 hover:bg-gray-50'
         } transition-colors duration-200`}
+        {...props}
       >
         {compact ? (
           <GraduationCap className="w-5 h-5 text-gray-600" />
