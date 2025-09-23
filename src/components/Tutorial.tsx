@@ -156,7 +156,7 @@ const Tutorial: React.FC<TutorialProps> = ({ isOpen, onComplete, onSkip, languag
   return (
     <div 
       ref={overlayRef}
-      className="fixed inset-0 z-50 bg-black bg-opacity-50 transition-opacity duration-300"
+      className="fixed inset-0 z-50 transition-opacity duration-300"
       style={{ pointerEvents: 'auto' }}
     >
       {/* Highlight spotlight */}
