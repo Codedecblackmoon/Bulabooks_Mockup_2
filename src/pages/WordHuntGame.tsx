@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { CheckCircle, XCircle } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
-import { wordHunt } from '../content';
-import { Language, LevelKey, WordHuntItem } from '../types';
+import { Language, LevelKey, WordHuntItem, Grade } from '../types';
+import { getWordHuntContent } from '../utils/contentSelector';
 import { t } from '../utils/i18n';
 
 interface WordHuntGameProps {
   language: Language;
+  grade: Grade;
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-const WordHuntGame: React.FC<WordHuntGameProps> = ({ language, showToast }) => {
+const WordHuntGame: React.FC<WordHuntGameProps> = ({ language, grade, showToast }) => {
   const navigate = useNavigate();
   const { progress, updateItemProgress, getCurrentLevel } = useProgress();
   
@@ -25,7 +26,7 @@ const WordHuntGame: React.FC<WordHuntGameProps> = ({ language, showToast }) => {
   const [showHint, setShowHint] = useState(false);
 
   // Get content for current level
-  const levelContent = wordHunt[language] || wordHunt.en;
+  const levelContent = getWordHuntContent(language, grade);
   const itemsPerLevel = 5;
   const startIndex = (currentLevel - 1) * itemsPerLevel;
   const levelItems = levelContent.slice(startIndex, startIndex + itemsPerLevel);
@@ -38,7 +39,7 @@ const WordHuntGame: React.FC<WordHuntGameProps> = ({ language, showToast }) => {
     setIsCorrect(false);
     setAttempts(0);
     setShowHint(false);
-  }, [currentItemIndex, currentLevel]);
+  }, [currentItemIndex, currentLevel, grade]);
 
   const handleWordClick = (word: string) => {
     if (showFeedback) return;

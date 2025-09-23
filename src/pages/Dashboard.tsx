@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Users, MessageSquare, TrendingUp, Clock, Target, Send } from 'lucide-react';
 import { useProgress } from '../hooks/useProgress';
-import { Language, GameKey } from '../types';
+import { Language, GameKey, Grade } from '../types';
 import { t } from '../utils/i18n';
 import { mockStudents, mockMessages } from '../content';
 
 interface DashboardProps {
   language: Language;
+  grade: Grade;
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ language, showToast }) => {
+const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'students' | 'messages'>('overview');
   const [selectedStudent, setSelectedStudent] = useState<string | null>(null);
   const { getGameProgress } = useProgress();
@@ -278,7 +279,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, showToast }) => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
-            {t('dashboard', language)}
+            {t('dashboard', language)} - Grade {grade}
           </h1>
           <p className="text-gray-600">
             Monitor student progress and send updates to parents

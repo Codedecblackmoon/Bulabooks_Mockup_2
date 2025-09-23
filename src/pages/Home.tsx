@@ -2,14 +2,17 @@ import React from 'react';
 import { BookOpen, Users, RotateCcw } from 'lucide-react';
 import GameCard from '../components/GameCard';
 import LanguageSwitcher from '../components/LanguageSwitcher';
+import GradeSelector from '../components/GradeSelector';
 import { useProgress } from '../hooks/useProgress';
-import { GameKey, Language } from '../types';
+import { GameKey, Language, Grade } from '../types';
 import { t } from '../utils/i18n';
 import { useNavigate } from 'react-router-dom';
 
 interface HomeProps {
   language: Language;
   onLanguageChange: (language: Language) => void;
+  grade: Grade;
+  onGradeChange: (grade: Grade) => void;
   onResetProgress: () => void;
 }
 
@@ -20,7 +23,13 @@ const games: { key: GameKey; titleKey: string; descKey: string }[] = [
   { key: 'wordBuilder', titleKey: 'Word Builder', descKey: 'gameDescriptions.wordBuilder' }
 ];
 
-const Home: React.FC<HomeProps> = ({ language, onLanguageChange, onResetProgress }) => {
+const Home: React.FC<HomeProps> = ({ 
+  language, 
+  onLanguageChange, 
+  grade, 
+  onGradeChange, 
+  onResetProgress 
+}) => {
   const { getGameProgress, getCurrentLevel } = useProgress();
   const navigate = useNavigate();
 
@@ -33,10 +42,14 @@ const Home: React.FC<HomeProps> = ({ language, onLanguageChange, onResetProgress
             {t('appName', language)}
           </h1>
           <p className="text-xl md:text-2xl text-orange-100 mb-8">
-            {t('tagline', language)}
+            {t('tagline', language)} - Grade {grade}
           </p>
           
-          <div className="flex justify-center">
+          <div className="flex justify-center space-x-4">
+            <GradeSelector
+              grade={grade}
+              onGradeChange={onGradeChange}
+            />
             <LanguageSwitcher
               language={language}
               onLanguageChange={onLanguageChange}

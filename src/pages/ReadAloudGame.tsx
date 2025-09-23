@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { Play, Mic, Volume2, Eye, Star } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
-import { readAloud } from '../content';
-import { Language, LevelKey, ReadAloudItem } from '../types';
+import { Language, LevelKey, ReadAloudItem, Grade } from '../types';
+import { getReadAloudContent } from '../utils/contentSelector';
 import { t } from '../utils/i18n';
 
 interface ReadAloudGameProps {
   language: Language;
+  grade: Grade;
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, showToast }) => {
+const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, grade, showToast }) => {
   const navigate = useNavigate();
   const { progress, updateItemProgress, getCurrentLevel } = useProgress();
   
@@ -24,7 +25,7 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, showToast }) =>
   const [attempts, setAttempts] = useState(0);
 
   // Get content for current level
-  const levelContent = readAloud[language] || readAloud.en;
+  const levelContent = getReadAloudContent(language, grade);
   const itemsPerLevel = 5;
   const startIndex = (currentLevel - 1) * itemsPerLevel;
   const levelItems = levelContent.slice(startIndex, startIndex + itemsPerLevel);
@@ -36,7 +37,7 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, showToast }) =>
     setIsRecording(false);
     setAttempts(0);
     setShowSyllables(false);
-  }, [currentItemIndex, currentLevel]);
+  }, [currentItemIndex, currentLevel, grade]);
 
   const handlePlayAudio = () => {
     if ('speechSynthesis' in window) {

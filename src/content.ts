@@ -46,7 +46,8 @@ export const uiStrings = {
       readAloud: 'Practice reading with instant feedback',
       fillBlank: 'Complete sentences with correct words',
       wordBuilder: 'Build words from syllable tiles'
-    }
+    },
+    gradeLevel: 'Grade Level'
   },
   zu: {
     appName: 'BulaBooks',
@@ -93,7 +94,8 @@ export const uiStrings = {
       readAloud: 'Zivivinye ukufunda ngempendulo esheshayo',
       fillBlank: 'Qedela imisho ngamagama afanele',
       wordBuilder: 'Yakha amagama kusuka ezinhlamini zezihlabu'
-    }
+    },
+    gradeLevel: 'Izinga Lebanga'
   },
   af: {
     appName: 'BulaBooks',
@@ -140,7 +142,8 @@ export const uiStrings = {
       readAloud: 'Oefen lees met onmiddellike terugvoer',
       fillBlank: 'Voltooi sinne met korrekte woorde',
       wordBuilder: 'Bou woorde uit lettergreep teëls'
-    }
+    },
+    gradeLevel: 'Graad Vlak'
   },
   tn: {
     appName: 'BulaBooks',
@@ -187,7 +190,8 @@ export const uiStrings = {
       readAloud: 'Ikatisetse go buisa ka pegelo ya ka bonako',
       fillBlank: 'Feleletsa dipolelo ka mafoko a a nepagetseng',
       wordBuilder: 'Aga mafoko go tswa mo dithaeleng tsa dinoko'
-    }
+    },
+    gradeLevel: 'Bogodimo jwa Lekala'
   }
 };
 

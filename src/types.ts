@@ -1,4 +1,5 @@
 export type Language = 'en' | 'zu' | 'af' | 'tn';
+export type Grade = 3 | 4 | 5 | 6 | 7;
 export type GameKey = 'wordHunt' | 'readAloud' | 'fillBlank' | 'wordBuilder';
 export type LevelKey = 1 | 2 | 3;
 

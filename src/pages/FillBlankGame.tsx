@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { CheckCircle, XCircle, Lightbulb } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
-import { fillBlank } from '../content';
-import { Language, LevelKey, FillBlankItem } from '../types';
+import { Language, LevelKey, FillBlankItem, Grade } from '../types';
+import { getFillBlankContent } from '../utils/contentSelector';
 import { t } from '../utils/i18n';
 
 interface FillBlankGameProps {
   language: Language;
+  grade: Grade;
   showToast: (message: string, type?: 'success' | 'error' | 'info') => void;
 }
 
-const FillBlankGame: React.FC<FillBlankGameProps> = ({ language, showToast }) => {
+const FillBlankGame: React.FC<FillBlankGameProps> = ({ language, grade, showToast }) => {
   const navigate = useNavigate();
   const { progress, updateItemProgress, getCurrentLevel } = useProgress();
   
@@ -25,7 +26,7 @@ const FillBlankGame: React.FC<FillBlankGameProps> = ({ language, showToast }) =>
   const [showHint, setShowHint] = useState(false);
 
   // Get content for current level
-  const levelContent = fillBlank[language] || fillBlank.en;
+  const levelContent = getFillBlankContent(language, grade);
   const itemsPerLevel = 5;
   const startIndex = (currentLevel - 1) * itemsPerLevel;
   const levelItems = levelContent.slice(startIndex, startIndex + itemsPerLevel);
@@ -38,7 +39,7 @@ const FillBlankGame: React.FC<FillBlankGameProps> = ({ language, showToast }) =>
     setIsCorrect(false);
     setAttempts(0);
     setShowHint(false);
-  }, [currentItemIndex, currentLevel]);
+  }, [currentItemIndex, currentLevel, grade]);
 
   const handleOptionClick = (option: string) => {
     if (showFeedback) return;

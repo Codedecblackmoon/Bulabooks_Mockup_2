@@ -2,16 +2,25 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, User, BarChart3, RotateCcw, Info, Home } from 'lucide-react';
 import LanguageSwitcher from './LanguageSwitcher';
-import { Language } from '../types';
+import GradeSelector from './GradeSelector';
+import { Language, Grade } from '../types';
 import { t } from '../utils/i18n';
 
 interface HeaderProps {
   language: Language;
   onLanguageChange: (language: Language) => void;
+  grade: Grade;
+  onGradeChange: (grade: Grade) => void;
   onResetProgress: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ language, onLanguageChange, onResetProgress }) => {
+const Header: React.FC<HeaderProps> = ({ 
+  language, 
+  onLanguageChange, 
+  grade, 
+  onGradeChange, 
+  onResetProgress 
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
@@ -53,6 +62,12 @@ const Header: React.FC<HeaderProps> = ({ language, onLanguageChange, onResetProg
       </div>
 
       <div className="flex items-center space-x-2">
+        <GradeSelector
+          grade={grade}
+          onGradeChange={onGradeChange}
+          compact
+        />
+        
         <LanguageSwitcher
           language={language}
           onLanguageChange={onLanguageChange}

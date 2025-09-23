@@ -9,12 +9,14 @@ import FillBlankGame from './pages/FillBlankGame';
 import WordBuilderGame from './pages/WordBuilderGame';
 import Dashboard from './pages/Dashboard';
 import { useLanguage } from './hooks/useLanguage';
+import { useGrade } from './hooks/useGrade';
 import { useProgress } from './hooks/useProgress';
 import { useToast } from './hooks/useToast';
 import './App.css';
 
 function App() {
   const { language, setLanguage } = useLanguage();
+  const { grade, setGrade } = useGrade();
   const { resetProgress } = useProgress();
   const { toasts, showToast, removeToast } = useToast();
 
@@ -29,6 +31,8 @@ function App() {
         <Header
           language={language}
           onLanguageChange={setLanguage}
+          grade={grade}
+          onGradeChange={setGrade}
           onResetProgress={handleResetProgress}
         />
         
@@ -40,29 +44,31 @@ function App() {
                 <Home
                   language={language}
                   onLanguageChange={setLanguage}
+                  grade={grade}
+                  onGradeChange={setGrade}
                   onResetProgress={handleResetProgress}
                 />
               }
             />
             <Route
               path="/game/word-hunt"
-              element={<WordHuntGame language={language} showToast={showToast} />}
+              element={<WordHuntGame language={language} grade={grade} showToast={showToast} />}
             />
             <Route
               path="/game/read-aloud"
-              element={<ReadAloudGame language={language} showToast={showToast} />}
+              element={<ReadAloudGame language={language} grade={grade} showToast={showToast} />}
             />
             <Route
               path="/game/fill-blank"
-              element={<FillBlankGame language={language} showToast={showToast} />}
+              element={<FillBlankGame language={language} grade={grade} showToast={showToast} />}
             />
             <Route
               path="/game/word-builder"
-              element={<WordBuilderGame language={language} showToast={showToast} />}
+              element={<WordBuilderGame language={language} grade={grade} showToast={showToast} />}
             />
             <Route
               path="/dashboard"
-              element={<Dashboard language={language} showToast={showToast} />}
+              element={<Dashboard language={language} grade={grade} showToast={showToast} />}
             />
           </Routes>
         </main>
