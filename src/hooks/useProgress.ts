@@ -92,8 +92,8 @@ export function useProgress() {
   };
 
   const getCurrentLevel = (game: GameKey): LevelKey => {
-    // Find the first uncompleted level, default to 1
-    for (let level: LevelKey = 1; level <= 3; level++) {
+    // Find the first uncompleted level, default to 1 ::: (let level: LevelKey = 1; level <= 3; level++)
+    for  (let level = 1 as LevelKey; level <= 3; level = (level + 1) as LevelKey){
       if (!progress[game][level].completed) {
         return level;
       }
