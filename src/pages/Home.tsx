@@ -47,7 +47,7 @@ const Home: React.FC<HomeProps> = ({
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white py-16 px-4">
+      <div className="bg-[#FF8000] text-[#f9fafb] py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             {t('appName', language)}
@@ -94,11 +94,11 @@ const Home: React.FC<HomeProps> = ({
       </div>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-8 px-4">
+      <footer className="bg-[#f9fafb] border-t border-gray-200 py-8 px-4">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
           <button
             onClick={() => navigate('/dashboard')}
-            className="flex items-center space-x-2 text-gray-600 hover:text-orange-600 transition-colors"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#FF8000] transition-colors"
            data-tutorial="dashboard-link"
           >
             <Users className="w-5 h-5" />
@@ -107,7 +107,7 @@ const Home: React.FC<HomeProps> = ({
           
           <button
             onClick={onResetProgress}
-            className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors"
+            className="flex items-center space-x-2 text-gray-600 hover:text-[#FF8000] transition-colors"
           >
             <RotateCcw className="w-5 h-5" />
             <span>{t('resetProgress', language)}</span>

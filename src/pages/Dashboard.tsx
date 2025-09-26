@@ -45,10 +45,10 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
     <div className="space-y-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-[#f9fafb] rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-orange-600" />
+              <TrendingUp className="w-5 h-5 text-[#FF8000]" />
             </div>
             <div>
               <p className="text-sm text-gray-600">Overall Progress</p>
@@ -57,7 +57,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-[#f9fafb] rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
               <Clock className="w-5 h-5 text-blue-600" />
@@ -69,7 +69,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-[#f9fafb] rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
               <Target className="w-5 h-5 text-green-600" />
@@ -81,7 +81,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-[#f9fafb] rounded-xl p-6 shadow-sm border border-gray-200">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
               <Users className="w-5 h-5 text-purple-600" />
@@ -97,7 +97,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Progress Chart */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-[#f9fafb] rounded-xl p-6 shadow-sm border border-gray-200">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Game Progress</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -121,7 +121,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
         </div>
 
         {/* Focus Areas */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+        <div className="bg-[#f9fafb] rounded-xl p-6 shadow-sm border border-gray-200">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('focusAreas', language)}</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-200">
@@ -144,7 +144,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
 
   const renderStudents = () => (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-[#f9fafb] rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="p-6 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-800">Student Progress</h3>
         </div>
@@ -170,7 +170,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-[#f9fafb] divide-y divide-gray-200">
               {mockStudents.map((student, index) => (
                 <tr 
                   key={index}
@@ -180,7 +180,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                        <span className="text-orange-600 font-medium">
+                        <span className="text-[#FF8000] font-medium">
                           {student.name.charAt(0)}
                         </span>
                       </div>
