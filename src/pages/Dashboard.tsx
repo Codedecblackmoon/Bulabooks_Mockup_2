@@ -20,7 +20,7 @@ const Dashboard: React.FC<DashboardProps> = ({ language, grade, showToast }) => 
   const gameKeys: GameKey[] = ['wordHunt', 'readAloud', 'fillBlank', 'wordBuilder'];
   const gameNames = {
     wordHunt: 'Word Hunt',
-    readAloud: 'Read-Aloud',
+    readAloud: 'Sentence Builder',
     fillBlank: 'Fill-in-the-Blank',
     wordBuilder: 'Word Builder'
   };
