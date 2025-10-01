@@ -276,7 +276,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, XCircle, Mic, RefreshCw } from 'lucide-react';
+import { CheckCircle, XCircle, RefreshCw, BookOpen } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
 import { Language, LevelKey, ReadAloudItem, Grade } from '../types';
@@ -295,27 +295,48 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, grade, showToas
 
   const [currentLevel, setCurrentLevel] = useState<LevelKey>(getCurrentLevel('readAloud'));
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const [availableWords, setAvailableWords] = useState<string[]>([]);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [attempts, setAttempts] = useState(0);
 
-  // Get content for current level
   const levelContent = getReadAloudContent(language, grade);
   const itemsPerLevel = 5;
   const startIndex = (currentLevel - 1) * itemsPerLevel;
   const levelItems = levelContent.slice(startIndex, startIndex + itemsPerLevel);
   const currentItem: ReadAloudItem = levelItems[currentItemIndex] || levelContent[currentItemIndex % levelContent.length];
 
-  // Reset state when item changes
   useEffect(() => {
+    const words = currentItem.text.split(' ');
+    const shuffled = [...words].sort(() => Math.random() - 0.5);
+    setAvailableWords(shuffled);
+    setSelectedWords([]);
     setShowFeedback(false);
     setIsCorrect(false);
     setAttempts(0);
-  }, [currentItemIndex, currentLevel, grade]);
+  }, [currentItemIndex, currentLevel, grade, currentItem.text]);
+
+  const handleAddWord = (word: string, index: number) => {
+    if (showFeedback) return;
+    setSelectedWords([...selectedWords, word]);
+    setAvailableWords(availableWords.filter((_, i) => i !== index));
+  };
+
+  const handleRemoveWord = (index: number) => {
+    if (showFeedback) return;
+    const word = selectedWords[index];
+    setAvailableWords([...availableWords, word]);
+    setSelectedWords(selectedWords.filter((_, i) => i !== index));
+  };
 
   const handleCheck = () => {
-    // In real use: integrate speech recognition evaluation here
-    const correct = Math.random() > 0.4; // 🔹 Placeholder for actual speech check
+    if (selectedWords.length === 0) return;
+
+    const userSentence = selectedWords.join(' ');
+    const correctSentence = currentItem.text;
+    const correct = userSentence === correctSentence;
+
     setIsCorrect(correct);
     setShowFeedback(true);
     setAttempts(prev => prev + 1);
@@ -328,9 +349,12 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, grade, showToas
   };
 
   const handleTryAgain = () => {
+    const words = currentItem.text.split(' ');
+    const shuffled = [...words].sort(() => Math.random() - 0.5);
+    setAvailableWords(shuffled);
+    setSelectedWords([]);
     setShowFeedback(false);
     setIsCorrect(false);
-    // keep attempts
   };
 
   const handleNext = () => {
@@ -369,7 +393,7 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, grade, showToas
   return (
     <GameLayout
       gameKey="readAloud"
-      gameTitle="Read Aloud"
+      gameTitle="Sentence Builder"
       language={language}
       currentItemIndex={currentItemIndex}
       totalItems={itemsPerLevel}
@@ -381,26 +405,72 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, grade, showToas
       showToast={showToast}
     >
       <div className="bg-white rounded-2xl p-8 shadow-lg">
-        {/* Instructions */}
         <div className="text-center mb-8">
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Read Aloud</h2>
-          <p className="text-gray-600 mb-4">Read the text out loud clearly</p>
+          <div className="flex items-center justify-center mb-3">
+            <BookOpen className="w-8 h-8 text-orange-500 mr-2" />
+            <h2 className="text-2xl font-bold text-gray-800">Sentence Builder</h2>
+          </div>
+          <p className="text-gray-600">Arrange the words in the correct order</p>
         </div>
 
-        {/* Text to Read */}
-        <div className="text-center mb-8">
-          <p className="text-lg font-medium text-gray-700">{currentItem.text}</p>
+        <div className="mb-6">
+          <h3 className="text-sm font-medium text-gray-600 mb-3 text-center">Build your sentence here:</h3>
+          <div className="min-h-24 p-4 bg-blue-50 rounded-xl border-2 border-blue-200 flex flex-wrap gap-2 justify-center items-center">
+            {selectedWords.length === 0 ? (
+              <p className="text-gray-400 italic">Tap words below to build the sentence</p>
+            ) : (
+              selectedWords.map((word, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleRemoveWord(index)}
+                  disabled={showFeedback}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                    showFeedback
+                      ? isCorrect
+                        ? 'bg-green-100 text-green-800 border-2 border-green-500 cursor-default'
+                        : 'bg-red-100 text-red-800 border-2 border-red-500 cursor-default'
+                      : 'bg-white border-2 border-blue-300 hover:bg-red-50 hover:border-red-300 cursor-pointer'
+                  }`}
+                >
+                  {word}
+                </button>
+              ))
+            )}
+          </div>
         </div>
 
-        {/* Controls */}
+        <div className="mb-8">
+          <h3 className="text-sm font-medium text-gray-600 mb-3 text-center">Available words:</h3>
+          <div className="min-h-20 p-4 bg-gray-50 rounded-xl border-2 border-gray-200 flex flex-wrap gap-2 justify-center items-center">
+            {availableWords.length === 0 ? (
+              <p className="text-gray-400 italic">All words used!</p>
+            ) : (
+              availableWords.map((word, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAddWord(word, index)}
+                  disabled={showFeedback}
+                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                    showFeedback
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                      : 'bg-white border-2 border-gray-300 hover:bg-orange-50 hover:border-orange-300 cursor-pointer'
+                  }`}
+                >
+                  {word}
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+
         <div className="flex justify-center space-x-4 mb-6">
           {!showFeedback ? (
             <button
               onClick={handleCheck}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-xl font-medium transition-colors flex items-center space-x-2"
+              disabled={selectedWords.length === 0}
+              className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white px-6 py-2 rounded-xl font-medium transition-colors"
             >
-              <Mic className="w-5 h-5" />
-              <span>{t('check', language)}</span>
+              {t('check', language)}
             </button>
           ) : (
             <>
@@ -424,7 +494,6 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, grade, showToas
           )}
         </div>
 
-        {/* Feedback */}
         {showFeedback && (
           <div
             className={`flex items-center justify-center p-4 rounded-xl mb-4 ${
@@ -433,14 +502,13 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, grade, showToas
           >
             {isCorrect ? <CheckCircle className="w-5 h-5 mr-2" /> : <XCircle className="w-5 h-5 mr-2" />}
             <span className="font-medium">
-              {isCorrect ? t('great', language) : t('wrong', language)}
+              {isCorrect ? t('great', language) : 'Try arranging the words differently'}
             </span>
           </div>
         )}
 
-        {/* Progress indicator */}
         <div className="text-center text-sm text-gray-500">
-          Item {currentItemIndex + 1} of {itemsPerLevel}
+          Sentence {currentItemIndex + 1} of {itemsPerLevel}
         </div>
       </div>
     </GameLayout>

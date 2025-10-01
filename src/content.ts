@@ -44,8 +44,8 @@ export const uiStrings = {
     tutorial: 'Tutorial',
     startTutorial: 'Start Tutorial',
     gameDescriptions: {
-      wordHunt: 'Find words by meaning in passages',
-      readAloud: 'Practice reading with instant feedback',
+      wordHunt: 'Find the correct word in a sentence',
+      readAloud: 'Arrange words to build sentences',
       fillBlank: 'Complete sentences with correct words',
       wordBuilder: 'Build words from syllable tiles'
     },
@@ -94,8 +94,8 @@ export const uiStrings = {
     tutorial: 'Isifundo',
     startTutorial: 'Qala Isifundo',
     gameDescriptions: {
-      wordHunt: 'Thola amagama ngencazelo ezindimeni',
-      readAloud: 'Zivivinye ukufunda ngempendulo esheshayo',
+      wordHunt: 'Thola igama elifanele emshweni',
+      readAloud: 'Hlela amagama ukwakha imisho',
       fillBlank: 'Qedela imisho ngamagama afanele',
       wordBuilder: 'Yakha amagama kusuka ezinhlamini zezihlabu'
     },
@@ -144,8 +144,8 @@ export const uiStrings = {
     tutorial: 'Tutoriaal',
     startTutorial: 'Begin Tutoriaal',
     gameDescriptions: {
-      wordHunt: 'Vind woorde volgens betekenis in teks',
-      readAloud: 'Oefen lees met onmiddellike terugvoer',
+      wordHunt: 'Vind die korrekte woord in die sin',
+      readAloud: 'Rangskik woorde om sinne te bou',
       fillBlank: 'Voltooi sinne met korrekte woorde',
       wordBuilder: 'Bou woorde uit lettergreep teëls'
     },
@@ -194,8 +194,8 @@ export const uiStrings = {
     tutorial: 'Thuto',
     startTutorial: 'Simolola Thuto',
     gameDescriptions: {
-      wordHunt: 'Batla mafoko ka bokao mo ditemaneng',
-      readAloud: 'Ikatisetse go buisa ka pegelo ya ka bonako',
+      wordHunt: 'Batla lefoko le le nepagetseng mo polelong',
+      readAloud: 'Rulaganya mafoko go aga dipolelo',
       fillBlank: 'Feleletsa dipolelo ka mafoko a a nepagetseng',
       wordBuilder: 'Aga mafoko go tswa mo dithaeleng tsa dinoko'
     },
