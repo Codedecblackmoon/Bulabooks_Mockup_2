@@ -195,7 +195,7 @@ import { CheckCircle, XCircle, Search, RefreshCw } from 'lucide-react';
 import GameLayout from '../components/GameLayout';
 import { useProgress } from '../hooks/useProgress';
 import { Language, LevelKey, WordHuntItem, Grade } from '../types';
-import { getWordHuntContent } from '../utils/contentSelector';kk
+import { getWordHuntContent } from '../utils/contentSelector';
 import { t } from '../utils/i18n';
 
 interface WordHuntGameProps {
