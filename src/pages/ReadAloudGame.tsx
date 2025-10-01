@@ -440,7 +440,7 @@ const ReadAloudGame: React.FC<ReadAloudGameProps> = ({ language, grade, showToas
         </div>
 
         <div className="mb-8">
-          <h3 className="text-sm font-medium text-gray-600 mb-3 text-center">Availabmmmmle words:</h3>
+          <h3 className="text-sm font-medium text-gray-600 mb-3 text-center">Available words:</h3>
           <div className="min-h-20 p-4 bg-gray-50 rounded-xl border-2 border-gray-200 flex flex-wrap gap-2 justify-center items-center">
             {availableWords.length === 0 ? (
               <p className="text-gray-400 italic">All words used!</p>
