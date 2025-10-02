@@ -19,7 +19,6 @@ interface GameCardProps {
   currentLevel: number;
   language: Language;
 }
-// ggggggggggggggggggggggghj
 
 const icons = {
   wordHunt: BookOpen,
