@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Mic, PenTool, Puzzle } from 'lucide-react';
+import { BookOpen, Pickaxe, PenTool, Puzzle } from 'lucide-react';
 import ProgressRing from './ProgressRing';
 import LevelProgressBar from './LevelProgressBar';
 import { GameKey } from '../types';
@@ -22,7 +22,7 @@ interface GameCardProps {
 
 const icons = {
   wordHunt: BookOpen,
-  readAloud: Mic,
+  readAloud: Pickaxe,
   fillBlank: PenTool,
   wordBuilder: Puzzle
 };

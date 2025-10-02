@@ -21,7 +21,7 @@ interface HomeProps {
 
 const games: { key: GameKey; titleKey: string; descKey: string }[] = [
   { key: 'wordHunt', titleKey: 'Word Hunt Adventure', descKey: 'gameDescriptions.wordHunt' },
-  { key: 'readAloud', titleKey: 'Read-Aloud', descKey: 'gameDescriptions.readAloud' },
+  { key: 'readAloud', titleKey: 'Sentence Builder', descKey: 'gameDescriptions.readAloud' },
   { key: 'fillBlank', titleKey: 'Fill-in-the-Blank Quest', descKey: 'gameDescriptions.fillBlank' },
   { key: 'wordBuilder', titleKey: 'Word Builder', descKey: 'gameDescriptions.wordBuilder' }
 ];
